@@ -31,8 +31,8 @@ public class Knife4jConfig {
     }
     private ApiInfo apiInfo(){
         return new ApiInfoBuilder()
-                .title("智慧展业工具项目")
-                .description("智慧展业工具项目在线API文档")
+                .title("智慧车辆项目")
+                .description("智慧车辆项目在线API文档")
                 .version("1.0")
                 .build();
     }

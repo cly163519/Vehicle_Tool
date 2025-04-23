@@ -13,7 +13,7 @@
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="insurance_tool@localhost" uuid="9aa562a2-570d-4c5a-90a3-0e54bb22e8e6">
+    <data-source source="LOCAL" name="insurance_tool@localhost" uuid="a23e4696-c5af-4363-b0cb-116a404baab8">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <imported>true</imported>

@@ -13,6 +13,13 @@ import javax.validation.ConstraintViolationException;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler
+    public JsonResult doHandleServiceException(ServiceException ex){
+        log.error("ServiceException:"+ex.getStatusCode().getMsg());
+        return new JsonResult(ex.getStatusCode());
+    }
+
+
+    @ExceptionHandler
     public JsonResult doHandleIllegalArgumentException(IllegalArgumentException ex){
         String message = ex.getMessage();
         log.error("IllegalArgumentException:"+message);

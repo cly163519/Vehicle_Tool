@@ -20,7 +20,7 @@ public enum StatusCode {
     OPERATION_FAILED(5001,"操作失败"),
     VALIDATE_ERROR(5002,"请求参数错误"),
     USERNAME_ALREADY_EXISTS(5003,"用户名被占用"),
-    DATA_UNEXIXTS(5004,"请求数据不存在");
+    DATA_UNEXISTS(5004,"请求数据不存在");
 
     private Integer code;  //Integer code = StatusCode.SUCCESS.getCode();
     private String msg;  //String message = StatusCode.SUCCESS.getMsg();

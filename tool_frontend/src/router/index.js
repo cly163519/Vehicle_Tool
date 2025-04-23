@@ -9,11 +9,14 @@ const routes = [
     redirect:'/user',
     children:[
       {path: '/user', component: () => import('../views/user/UserView.vue')},
-      {path: '/vehicle', component: () => import('../views/insurance_policy/InsurancePolicyView.vue')},
-      {path: '/geofence', component: () => import('../views/insurance_plan/GeneratePlanView.vue')},
-      {path: '/geofenceMap', component: () => import('../views/insurance_plan/MakePlanView.vue')},
-      {path: '/application', component: () => import('../views/customer/CustomerView.vue')}
-
+      {path: '/vehicle', component: () => import('../views/vehicle/VehicleView.vue')},
+      {path: '/geofence', component: () => import('../views/geofence/GeofenceView.vue')},
+      {path: '/geofenceMap', component: () => import('../views/geofence/GeofenceMapView.vue')},
+      {path: '/application', component: () => import('../views/schedule/ApplicationView.vue')},
+      {path: '/audit', component: () => import('../views/schedule/AuditView.vue')},
+      {path: '/distribute', component: () => import('../views/schedule/DistributeView.vue')},
+      {path: '/dict', component: () => import('../views/dictionary/DictView.vue')},
+      {path: '/dictOption', component: () => import('../views/dictionary/DictOptionView.vue')}
     ]
   },
   {path: '/login', component: () => import('../views/LoginView')}
