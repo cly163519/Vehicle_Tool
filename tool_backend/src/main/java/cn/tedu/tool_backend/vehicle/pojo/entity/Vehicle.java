@@ -7,40 +7,40 @@ import java.util.Date;
 
 @Data
 public class Vehicle {
-    @ApiModelProperty(value="车辆id")
+    @ApiModelProperty(value="Vehicle id")
     private Long id;
-    @ApiModelProperty(value="车辆品牌")
+    @ApiModelProperty(value="Vehicle brand")
     private String brand;
-    @ApiModelProperty(value="车牌号")
+    @ApiModelProperty(value="Vehicle number")
     private String license;
-    @ApiModelProperty(value="车辆型号")
+    @ApiModelProperty(value="Vehicle model")
     private String model;
-    @ApiModelProperty(value="车辆识别码")
+    @ApiModelProperty(value="Vehicle Identification Number")
     private String code;
-    @ApiModelProperty(value="车辆排量")
+    @ApiModelProperty(value="Vehicle displacement")
     private String displacement;
-    @ApiModelProperty(value="车辆状态")
+    @ApiModelProperty(value="Vehicle status")
     private String status;
-    @ApiModelProperty(value="车辆状态")
+    @ApiModelProperty(value="Vehicle status")
     private String type;
-    @ApiModelProperty(value="车辆颜色")
+    @ApiModelProperty(value="Vehicle color")
     private String color;
-    @ApiModelProperty(value="车辆里程数")
+    @ApiModelProperty(value="Vehicle mileage")
     private String kilometers;
-    @ApiModelProperty(value="车辆上牌时间")
+    @ApiModelProperty(value="Vehicle registration time")
     private Date regTime;
-    @ApiModelProperty(value="车辆购买时间")
+    @ApiModelProperty(value="Vehicle purchase time")
     private Date buyTime;
-    @ApiModelProperty(value="车辆购买价格")
+    @ApiModelProperty(value="Vehicle purchase price")
     private String price;
-    @ApiModelProperty(value="车辆电池类型")
+    @ApiModelProperty(value="Vehicle battery type")
     private String batteryType;
-    @ApiModelProperty(value="车辆创建时间")
+    @ApiModelProperty(value="Vehicle creation time")
     private Date createTime;
-    @ApiModelProperty(value="车辆更新时间")
+    @ApiModelProperty(value="Vehicle update time")
     private Date updateTime;
-    @ApiModelProperty(value="电子围栏绑定状态")
+    @ApiModelProperty(value="Electronic fence binding status")
     private String geofenceBindStatus;
-    @ApiModelProperty(value="电子围栏id")
+    @ApiModelProperty(value="Electronic fence id")
     private Long geofenceId;
 }
