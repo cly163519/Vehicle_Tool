@@ -5,14 +5,14 @@ import lombok.Data;
 
 @Data
 public class VehicleQuery {
-    @ApiModelProperty(value="车辆id")
+    @ApiModelProperty(value="Vehicle id")
     private Long id;
-    @ApiModelProperty(value="车辆品牌")
+    @ApiModelProperty(value="Vehicle Brand")
     private String brand;
-    @ApiModelProperty(value="车牌号")
+    @ApiModelProperty(value="Vehicle number")
     private String license;
-    @ApiModelProperty(value="电子围栏绑定状态")
+    @ApiModelProperty(value="Electronic fence binding status")
     private String geofenceBindStatus;
-    @ApiModelProperty(value="电子围栏id")
+    @ApiModelProperty(value="Electronic fence id")
     private Long geofenceId;
 }
