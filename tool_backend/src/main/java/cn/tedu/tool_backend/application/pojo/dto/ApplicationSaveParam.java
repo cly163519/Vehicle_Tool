@@ -9,32 +9,32 @@ import java.util.List;
 
 @Data
 public class ApplicationSaveParam {
-    @ApiModelProperty(value="申请表id")
+    @ApiModelProperty(value="Application form id")
     private Long id;
-    @ApiModelProperty(value="申请人id")
+    @ApiModelProperty(value="Applicant's id")
     private Long userId;
-    @ApiModelProperty(value="申请人姓名")
+    @ApiModelProperty(value="Applicant's name")
     private String username;
-    @ApiModelProperty(value="用车开始时间")
+    @ApiModelProperty(value="Vehicle start time")
     @DateTimeFormat(pattern = "yyyy-MM-ss HH:mm:ss")
     private Date startTime;
-    @ApiModelProperty(value="用车结束时间")
+    @ApiModelProperty(value="Vehicle end time")
     @DateTimeFormat(pattern = "yyyy-MM-ss HH:mm:ss")
     private Date endTime;
-    @ApiModelProperty(value="驾照图片")
+    @ApiModelProperty(value="Driver's license image")
     private String imgUrl;
-    @ApiModelProperty(value="出发地")
+    @ApiModelProperty(value="Departure")
     private String departureAddr;
-    @ApiModelProperty(value="目的地")
+    @ApiModelProperty(value="destination")
     private String destinationAddr;
-    @ApiModelProperty(value="申请原因")
+    @ApiModelProperty(value="Reason for application")
     private String reason;
-    @ApiModelProperty(value="备注")
+    @ApiModelProperty(value="Remark")
     private String remark;
-    @ApiModelProperty(value="申请单状态")
+    @ApiModelProperty(value="Application status")
     private String status;
-    @ApiModelProperty(value="分配车辆id")
+    @ApiModelProperty(value="Vehicle allocation id")
     private Long vehicleId;
-    @ApiModelProperty(value="审批人id集合")
+    @ApiModelProperty(value="Approver id set")
     private List<Long> auditUserIdList; //[106,103]
 }
