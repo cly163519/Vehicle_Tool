@@ -5,12 +5,12 @@ import lombok.Data;
 
 @Data
 public class ApplicationQuery {
-    @ApiModelProperty(value="出发地")
+    @ApiModelProperty(value="Departure point")
     private String departureAddr;
-    @ApiModelProperty(value="目的地")
+    @ApiModelProperty(value="Destination")
     private String destinationAddr;
-    @ApiModelProperty(value="申请单状态")
+    @ApiModelProperty(value="Application status")
     private String status;
-    @ApiModelProperty(value="申请人姓名")
+    @ApiModelProperty(value="Applicant's Name")
     private String username;
 }
