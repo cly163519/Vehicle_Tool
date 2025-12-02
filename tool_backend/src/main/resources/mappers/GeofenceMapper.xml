@@ -37,7 +37,5 @@
     </delete>
 </mapper>
 
-<!-- 注释不能写在SQL语句中间,
-这句可代替动态<set>
-SET status = #{status},update_time = #{updateTime}-->
+
 
