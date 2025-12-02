@@ -5,12 +5,12 @@ import lombok.Data;
 
 @Data
 public class GeofenceParam {
-    @ApiModelProperty(value="围栏编号")
+    @ApiModelProperty(value="Fence number")
     private Long id;
-    @ApiModelProperty(value="围栏名称")
+    @ApiModelProperty(value="Fence name")
     private String name;
-    @ApiModelProperty(value="围栏坐标点")
+    @ApiModelProperty(value="Fence coordinates")
     private String position;
-    @ApiModelProperty(value="围栏状态")
+    @ApiModelProperty(value="Fence status")
     private String status;
 }
