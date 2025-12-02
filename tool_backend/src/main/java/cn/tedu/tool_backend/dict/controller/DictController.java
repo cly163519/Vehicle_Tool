@@ -20,19 +20,19 @@ public class DictController {
 
     @GetMapping("select")
     public JsonResult selectDict(DictQuery dictQuery){
-        log.debug("查询字典业务:dictQuery={}",dictQuery);
+        log.debug("Dictionary lookup service:dictQuery={}",dictQuery);
         List<DictVO> list = dictService.selectDict(dictQuery);
         return JsonResult.ok();
     }
     @PostMapping("save")
     public JsonResult saveDict(DictSaveParam dictSaveParam){
-        log.debug("保存字典:dictSaveParam={}",dictSaveParam);
+        log.debug("Save dictionary:dictSaveParam={}",dictSaveParam);
         dictService.saveDict(dictSaveParam);
         return JsonResult.ok();
     }
     @PostMapping("delete/{id}")
     public JsonResult deleteDice(@PathVariable Long id){
-        log.debug("删除字典:id={}",id);
+        log.debug("Delete dictionary:id={}",id);
         dictService.deleteDict(id);
         return JsonResult.ok();
     }
