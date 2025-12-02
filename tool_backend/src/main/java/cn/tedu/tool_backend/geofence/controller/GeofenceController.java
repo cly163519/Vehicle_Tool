@@ -20,19 +20,19 @@ public class GeofenceController {
 
     @GetMapping("select")
     public JsonResult selectGeofence(GeofenceQuery geofenceQuery){
-        log.debug("查询围栏:geofenceQuery={}",geofenceQuery);
+        log.debug("Query fence: geofenceQuery={}",geofenceQuery);
         List<GeofenceVO> list = geofenceService.selectGeofence(geofenceQuery);
         return JsonResult.ok(list);
     }
     @PostMapping("save")
     public JsonResult saveGeofence(GeofenceParam geofenceParam){
-        log.debug("保存围栏业务:geofenceParam={}",geofenceParam);
+        log.debug("Preservation Fence Business: geofenceParam={}",geofenceParam);
         geofenceService.saveGeofence(geofenceParam);
         return JsonResult.ok();
     }
     @PostMapping("delete/{id}")
     public JsonResult deleteGeofence(@PathVariable Long id){
-        log.debug("删除围栏业务:id={}",id);
+        log.debug("Fence removal service: id={}",id);
         geofenceService.deleteGeofence(id);
         return JsonResult.ok();
     }
