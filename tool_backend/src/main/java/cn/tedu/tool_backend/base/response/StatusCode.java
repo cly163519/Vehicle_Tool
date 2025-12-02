@@ -10,17 +10,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public enum StatusCode {
     SUCCESS(2000,"OK"),
-    LOGIN_SUCCESS(2001,"登录成功"),
-    OPERATION_SUCCESS(2002,"操作成功"),
+    LOGIN_SUCCESS(2001,"Login successful"),
+    OPERATION_SUCCESS(2002,"Operation successful"),
 
-    NOT_LOGIN(4000,"未登录"),
-    PASSWORD_ERROR(4002,"用户名或密码错误"),
-    USERNAME_ERROR(4003,"用户名或密码错误"),
+    NOT_LOGIN(4000,"Not logged in"),
+    PASSWORD_ERROR(4002,"Username or password incorrect."),
+    USERNAME_ERROR(4003,"Username or password incorrect."),
 
-    OPERATION_FAILED(5001,"操作失败"),
-    VALIDATE_ERROR(5002,"请求参数错误"),
-    USERNAME_ALREADY_EXISTS(5003,"用户名被占用"),
-    DATA_UNEXISTS(5004,"请求数据不存在");
+    OPERATION_FAILED(5001,"Operation failed"),
+    VALIDATE_ERROR(5002,"Incorrect request parameters"),
+    USERNAME_ALREADY_EXISTS(5003,"Username is already taken."),
+    DATA_UNEXISTS(5004,"The requested data does not exist.");
 
     private Integer code;  //Integer code = StatusCode.SUCCESS.getCode();
     private String msg;  //String message = StatusCode.SUCCESS.getMsg();
