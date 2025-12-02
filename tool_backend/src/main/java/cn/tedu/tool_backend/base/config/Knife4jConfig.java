@@ -18,11 +18,6 @@ public class Knife4jConfig {
     @Bean
     public Docket createRestApi(){
         return new Docket(DocumentationType.SWAGGER_2)
-                /*
-                  在 Java 中，return 确实是用于返回一个值。不过在链式调用（method chaining）的情况下，
-                  返回值本身也可以是一个对象，通过该对象可以继续调用其方法。
-                  这种方式常用于构建器模式（Builder Pattern），使代码更简洁和易读。
-                 */
                 .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("cn.tedu.tool_backend"))
@@ -31,8 +26,8 @@ public class Knife4jConfig {
     }
     private ApiInfo apiInfo(){
         return new ApiInfoBuilder()
-                .title("智慧车辆项目")
-                .description("智慧车辆项目在线API文档")
+                .title("Smart vehicle project")
+                .description("Smart Vehicle Project Online API Documentation")
                 .version("1.0")
                 .build();
     }
