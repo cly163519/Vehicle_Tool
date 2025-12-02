@@ -5,24 +5,24 @@ import lombok.Data;
 
 @Data
 public class UserSaveParam {
-    @ApiModelProperty(value="用户id")
+    @ApiModelProperty(value="user id")
     private Long id;
-    @ApiModelProperty(value="用户名")
+    @ApiModelProperty(value="user name")
     private String username;
-    @ApiModelProperty(value="邮箱")
+    @ApiModelProperty(value="email")
     private String email;
-    @ApiModelProperty(value="密码")
+    @ApiModelProperty(value="password")
     private String password;
-    @ApiModelProperty(value="手机号")
+    @ApiModelProperty(value="phone number")
     private String phone;
-    @ApiModelProperty(value="年龄")
+    @ApiModelProperty(value="age")
     private Integer age;
-    @ApiModelProperty(value="性别")
+    @ApiModelProperty(value="sex")
     private String gender;
-    @ApiModelProperty(value="用户状态")
+    @ApiModelProperty(value="user status")
     private String status;
-    @ApiModelProperty(value="用户职级")
+    @ApiModelProperty(value="user rank")
     private String level;
-    @ApiModelProperty(value="上级id")
+    @ApiModelProperty(value="superior id")
     private Long parentId;
 }
