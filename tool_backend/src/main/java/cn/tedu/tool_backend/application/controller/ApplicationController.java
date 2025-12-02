@@ -20,32 +20,32 @@ public class ApplicationController {
 
     @PostMapping("save")
     public JsonResult savaApplication(ApplicationSaveParam applicationSaveParam){
-        log.debug("保存申请业务:applicationSaveParam={}",applicationSaveParam);
+        log.debug("Save application business: applicationSaveParam={}",applicationSaveParam);
         applicationService.save(applicationSaveParam);
         return JsonResult.ok();
     }
     @GetMapping("select")
     public JsonResult select(ApplicationQuery applicationQuery){
-        log.debug("查询申请单列表数据,applicationQuery={}",applicationQuery);
+        log.debug("Query application list data, applicationQuery={}",applicationQuery);
         List<ApplicationVO> list = applicationService.selectApplication(applicationQuery);
         return JsonResult.ok(list);
     }
     @PostMapping("cancel/{id}")
     public JsonResult cancel(@PathVariable Long id){
-        log.debug("撤销申请单:id{}",id);
+        log.debug("Withdrawal application form: id{}",id);
         applicationService.cancel(id);
         return JsonResult.ok();
 
     }
     @PostMapping("distribute/{applicationId}/{vehicleId}")
     public JsonResult distribute(@PathVariable Long applicationId, @PathVariable Long vehicleId){
-        log.debug("分配车辆:申请单号="+applicationId+"车辆编号="+vehicleId);
+        log.debug("Vehicle allocation: Application number = "+applicationId+"Vehicle number = "+vehicleId);
         applicationService.distribute(applicationId,vehicleId);
         return JsonResult.ok();
     }
     @PostMapping("back/{applicationId}/{vehicleId}")
     public JsonResult back(@PathVariable Long applicationId,@PathVariable Long vehicleId){
-        log.debug("归还车辆业务:申请单编号="+applicationId+"车辆编号="+vehicleId );
+        log.debug("Vehicle return service: Application form number = "+applicationId+"Vehicle number="+vehicleId );
         applicationService.back(applicationId,vehicleId);
         return JsonResult.ok();
     }
