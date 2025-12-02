@@ -10,22 +10,22 @@ import java.util.List;
 
 @Data
 public class GeofenceVO {
-    @ApiModelProperty(value="围栏id")
+    @ApiModelProperty(value="Fence id")
     private Long id;
-    @ApiModelProperty(value="围栏名称")
+    @ApiModelProperty(value="Fence name")
     private String name;
-    @ApiModelProperty(value="围栏状态")
+    @ApiModelProperty(value="Fence status")
     private String status;
-    @ApiModelProperty(value="围栏坐标点")
+    @ApiModelProperty(value="Fence coordinator")
     private String position;
-    @ApiModelProperty(value="围栏创建时间")
+    @ApiModelProperty(value="Fence creation time")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
-    @ApiModelProperty(value="围栏已绑定车辆列表")
+    @ApiModelProperty(value="The fence has been bound to the vehicle list")
     private List<VehicleVO> vehicleList;
-    @ApiModelProperty(value="围栏绑定车辆总数")
+    @ApiModelProperty(value="The total number of vehicles bound by the fence")
     private Integer totalNum;
-    @ApiModelProperty(value="围栏可用车辆数")
+    @ApiModelProperty(value="Number of vehicles available at the fence")
     private Integer availableNum;
 
 }
