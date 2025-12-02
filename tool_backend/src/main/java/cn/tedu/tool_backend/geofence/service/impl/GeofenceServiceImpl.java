@@ -27,7 +27,7 @@ public class GeofenceServiceImpl implements GeofenceService {
     VehicleMapper vehicleMapper;
     @Override
     public List<GeofenceVO> selectGeofence(GeofenceQuery geofenceQuery) {
-        log.debug("查询围栏:geofenceQuery:geofenceQuery{}",geofenceQuery);
+        log.debug("Query fence: geofenceQuery:geofenceQuery{}",geofenceQuery);
         List<GeofenceVO> list = geofenceMapper.selectGeofence(geofenceQuery);
         for(int i=0;i<list.size();i++){
             GeofenceVO geofenceVO = list.get(i);
@@ -53,7 +53,7 @@ public class GeofenceServiceImpl implements GeofenceService {
 
     @Override
     public void saveGeofence(GeofenceParam geofenceParam) {
-        log.debug("保存围栏业务:geofenceParam={}",geofenceParam);
+        log.debug("Preservation Fence Business: geofenceParam={}",geofenceParam);
         Geofence geofence = new Geofence();
         BeanUtils.copyProperties(geofenceParam,geofence);
         if(geofence.getId() != null){
@@ -68,7 +68,7 @@ public class GeofenceServiceImpl implements GeofenceService {
 
     @Override
     public void deleteGeofence(Long id) {
-        log.debug("删除围栏业务信息:id={}",id);
+        log.debug("Delete Fence Business: id={}",id);
         VehicleQuery vehicleQuery = new VehicleQuery();
         vehicleQuery.setGeofenceId(id);
         List<VehicleVO> list = vehicleMapper.selectVehicle(vehicleQuery);
