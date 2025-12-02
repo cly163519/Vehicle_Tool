@@ -5,16 +5,16 @@ import lombok.Data;
 import java.util.Date;
 @Data
 public class Geofence {
-    @ApiModelProperty(value = "围栏id")
+    @ApiModelProperty(value = "Fence id")
     private Long id;
-    @ApiModelProperty(value = "围栏名称")
+    @ApiModelProperty(value = "Fence name")
     private String name;
-    @ApiModelProperty(value = "围栏状态")
+    @ApiModelProperty(value = "Fence status")
     private String status;
-    @ApiModelProperty(value = "围栏坐标点")
+    @ApiModelProperty(value = "Fence coordinate")
     private String position;
-    @ApiModelProperty(value = "创建时间")
+    @ApiModelProperty(value = "Create time")
     private Date createTime;
-    @ApiModelProperty(value = "更新时间")
+    @ApiModelProperty(value = "Update time")
     private Date updateTime;
 }
