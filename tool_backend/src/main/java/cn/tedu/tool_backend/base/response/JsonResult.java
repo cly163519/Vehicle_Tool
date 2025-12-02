@@ -1,8 +1,4 @@
 package cn.tedu.tool_backend.base.response;
-/*
-多个构造函数的目的是为了方便在不同的情况下创建 JsonResult 对象。
-通过不同的构造函数，可以用不同的方式初始化对象，提供灵活性和简便性。
- */
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,7 +9,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class JsonResult {// JsonResult 类，用于封装 API 响应结果
+public class JsonResult {
     private Integer code;
     private String msg;
     private Object data;
@@ -40,8 +36,7 @@ public class JsonResult {// JsonResult 类，用于封装 API 响应结果
         this.data = data;
     }
 
-    public static JsonResult ok(Object data){  //使用静态方法的目的是为了提供更简便的创建 JsonResult 对象的方式。
-                                                // 静态方法不需要创建类的实例即可调用，更加直观和方便。
+    public static JsonResult ok(Object data){  
         return new JsonResult(data);
     }
 
