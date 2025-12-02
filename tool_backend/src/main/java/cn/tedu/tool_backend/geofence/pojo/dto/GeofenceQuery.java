@@ -5,11 +5,11 @@ import lombok.Data;
 
 @Data
 public class GeofenceQuery {
-    @ApiModelProperty(value = "围栏id")
+    @ApiModelProperty(value = "Fence id")
     private Long id;
-    @ApiModelProperty(value = "围栏名称")
+    @ApiModelProperty(value = "Fence name")
     private String name;
-    @ApiModelProperty(value = "围栏状态")
+    @ApiModelProperty(value = "Fence status")
     private Long status;
 
 }
