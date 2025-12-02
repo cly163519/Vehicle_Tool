@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     UserMapper userMapper;
     @Override
     public UserVO login(UserLoginParam userLoginParam) {
-        log.debug("用户登录,参数:{}",userLoginParam);
+        log.debug("User login, parameters: {}",userLoginParam);
         UserVO userVO = userMapper.selectByUsername(userLoginParam.getUsername());
         if(userVO==null){
             throw new ServiceException(StatusCode.USERNAME_ERROR);
@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     public void resetPassword(Long userId){
-        log.debug("重置用户密码: userId={}", userId);
+        log.debug("Reset user password: userId={}", userId);
         User user = new User();
         user.setId(userId);
         user.setPassword("root");
@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     public void updateStatus(Long userId,String status){
-        log.debug("更新用户状态:userId{},status{}",userId,status);
+        log.debug("Update user status: userId{},status{}",userId,status);
         User user = new User();
         user.setId(userId);
         user.setStatus(status);
@@ -74,13 +74,13 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     public void deleteUser(Long userId){
-        log.debug("删除用户:userId={}",userId);
+        log.debug("Delete user: userId={}",userId);
         userMapper.deleteById(userId);
     }
 
     @Override
     public List<UserVO> selectAuditList(Long parentId) {
-        log.debug("查询审核人集合业务:parentId={},parentId");
+        log.debug("Query the collection of reviewers business: parentId={},parentId");
         ArrayList<UserVO> userVOList = new ArrayList<>();
         UserVO auditUser1 = userMapper.selectById(parentId);
         userVOList.add(auditUser1);
