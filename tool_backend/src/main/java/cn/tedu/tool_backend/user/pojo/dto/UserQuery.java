@@ -7,12 +7,12 @@ import lombok.Data;
 public class UserQuery {
     @ApiModelProperty(value="id")
     private Long id;
-    @ApiModelProperty(value="用户名")
+    @ApiModelProperty(value="user name")
     private String username;
-    @ApiModelProperty(value="用户状态")
+    @ApiModelProperty(value="user status")
     private String status;
-    @ApiModelProperty(value="用户职级")
+    @ApiModelProperty(value="User Rank")
     private String level;
-    @ApiModelProperty(value="上级id")
+    @ApiModelProperty(value="Superior id")
     private Long parentId;
 }
