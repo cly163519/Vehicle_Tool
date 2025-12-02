@@ -5,9 +5,9 @@ import lombok.Data;
 
 @Data
 public class UserLoginParam {
-    @ApiModelProperty(value="用户名")
+    @ApiModelProperty(value="user")
     private String username;
-    @ApiModelProperty(value="密码")
+    @ApiModelProperty(value="password")
     private String password;
 
 }
