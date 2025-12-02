@@ -19,34 +19,34 @@ public class VehicleController {
     VehicleService vehicleService;
     @GetMapping("select")
     public JsonResult selectVehicle(VehicleQuery vehicleQuery){
-        log.debug("查询车辆:vehicle={}",vehicleQuery);
+        log.debug("Vehicle search: vehicle={}",vehicleQuery);
         List<VehicleVO> list = vehicleService.selectVehicle(vehicleQuery);
         return JsonResult.ok(list);
     }
     @PostMapping("save")
     public JsonResult saveVehicle(VehicleSaveParam vehicleSaveParam){
-        log.debug("保存车辆:saveVehicleParam{}",vehicleSaveParam);
+        log.debug("Save vehicle: saveVehicleParam{}",vehicleSaveParam);
         vehicleService.saveVehicle(vehicleSaveParam);
         return JsonResult.ok();
     }
 
     @PostMapping("delete/{id}")
     public JsonResult deleteVehicle(@PathVariable Long id){
-        log.debug("保存车辆:deleteVehicle{}",id);
+        log.debug("Save vehicle: deleteVehicle{}",id);
         vehicleService.deleteVehicle(id);
         return JsonResult.ok();
     }
 
     @PostMapping("unbind/{vehicleId}")
     public JsonResult unbindVehicle(@PathVariable Long vehicleId){
-        log.debug("解绑车辆,vehicleId={}",vehicleId);
+        log.debug("Unbind vehicle, vehicleId={}",vehicleId);
         vehicleService.unbindVehicle(vehicleId);
         return JsonResult.ok();
 
     }
     @PostMapping("bind/{geofenceId}/{vehicleId}")
     public JsonResult bindVehicle(@PathVariable Long geofenceId, @PathVariable Long vehicleId){
-        log.debug("绑定车辆:geofenceId={},vehicleId{}",geofenceId,vehicleId);
+        log.debug("Bind vehicle: geofenceId={},vehicleId{}",geofenceId,vehicleId);
         vehicleService.bindVehicle(geofenceId,vehicleId);
         return JsonResult.ok();
     }
