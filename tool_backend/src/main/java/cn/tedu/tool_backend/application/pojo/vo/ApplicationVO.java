@@ -9,39 +9,39 @@ import java.util.List;
 
 @Data
 public class ApplicationVO {
-    @ApiModelProperty(value = "申请表id")
+    @ApiModelProperty(value = "Application form id")
     private Long id;
-    @ApiModelProperty(value = "申请人id")
+    @ApiModelProperty(value = "Applicant's id")
     private Long userId;
-    @ApiModelProperty(value = "申请人姓名")
+    @ApiModelProperty(value = "Applicant's name")
     private String username;
-    @ApiModelProperty(value = "用车开始时间")
+    @ApiModelProperty(value = "Vehicle usage start time")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date startTime;
-    @ApiModelProperty(value = "用车结束时间")
+    @ApiModelProperty(value = "Vehicle usage end time")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date endTime;
-    @ApiModelProperty(value = "驾照图片")
+    @ApiModelProperty(value = "Driver's license image")
     private String imgUrl;
-    @ApiModelProperty(value = "出发地")
+    @ApiModelProperty(value = "Departure")
     private String departureAddr;
-    @ApiModelProperty(value = "目的地")
+    @ApiModelProperty(value = "Destination")
     private String destinationAddr;
-    @ApiModelProperty(value = "申请原因")
+    @ApiModelProperty(value = "Application reason")
     private String reason;
-    @ApiModelProperty(value = "备注")
+    @ApiModelProperty(value = "Remarks")
     private String remark;
-    @ApiModelProperty(value = "申请单状态")
+    @ApiModelProperty(value = "Application form status")
     private String status;
-    @ApiModelProperty(value = "分配车辆id")
+    @ApiModelProperty(value = "Assign vehicle id")
     private Long vehicleId;
-    @ApiModelProperty(value = "驳回原因")
+    @ApiModelProperty(value = "Reasons for rejection")
     private String rejectReason;
-    @ApiModelProperty(value = "审批人id集合")
+    @ApiModelProperty(value = "Approver id set")
     private List<Long> auditUserIdList;//[106,103]
-    @ApiModelProperty(value = "审批人姓名,字符串分隔")
+    @ApiModelProperty(value = "Approver's name, string separator")
     private String auditUsernameList;//"moly,tom"
-    @ApiModelProperty(value = "申请时间")
+    @ApiModelProperty(value = "Application time")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createTime;
 }
