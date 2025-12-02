@@ -20,13 +20,13 @@ public class VehicleServiceImpl implements VehicleService {
     VehicleMapper vehicleMapper;
     @Override
     public List<VehicleVO> selectVehicle(VehicleQuery vehicleQuery) {
-        log.debug("查询车辆:vehicleQuery={}",vehicleQuery);
+        log.debug("Vehicle search: vehicleQuery={}",vehicleQuery);
         List<VehicleVO> list = vehicleMapper.selectVehicle(vehicleQuery);
         return list;
     }
     @Override
     public void saveVehicle(VehicleSaveParam vehicleSaveParam){
-        log.debug("保存车辆,参数:{}",vehicleSaveParam);
+        log.debug("Save vehicle parameters: {}",vehicleSaveParam);
         Vehicle vehicle = new Vehicle();
         BeanUtils.copyProperties(vehicleSaveParam, vehicle);
         if(vehicle.getId()==null){
@@ -45,7 +45,7 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public void unbindVehicle(Long vehicleId) {
-        log.debug("解绑车辆业务:unbindVehicle{}",vehicleId);
+        log.debug("Unbind vehicle business: unbindVehicle{}",vehicleId);
         Vehicle vehicle = new Vehicle();
         vehicle.setId(vehicleId);
         vehicle.setGeofenceId(null);
@@ -56,7 +56,7 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public void bindVehicle(Long geofenceId, Long vehicleId) {
-        log.debug("车辆绑定业务:bindVehicle{}", geofenceId, vehicleId);
+        log.debug("Vehicle binding service:bindVehicle{}", geofenceId, vehicleId);
         Vehicle vehicle = new Vehicle();
         vehicle.setId(vehicleId);
         vehicle.setGeofenceId(geofenceId);
