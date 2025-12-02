@@ -53,7 +53,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public List<ApplicationVO> selectApplication(ApplicationQuery applicationQuery){
-        log.debug("查询申请单列表业务:applicationQuery={}",applicationQuery);
+        log.debug("Query application list service:applicationQuery={}",applicationQuery);
         List<ApplicationVO> list = applicationMapper.selectApplication(applicationQuery);
         for(int i=0;i<list.size();i++){
             ApplicationVO applicationVO = list.get(i);
@@ -82,7 +82,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
     @Override
     public void cancel(Long id){
-        log.debug("撤销申请单业务:id={}",id);
+        log.debug("Cancellation of application form: id={}",id);
         Application application = new Application();
         application.setId(id);
         application.setStatus(ApplicationStatusEnum.CANCEL.getCode());
@@ -93,7 +93,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
     @Override
     public void distribute(Long applicationId,Long vehicleId){
-        log.debug("分配车辆业务:applicationId={},vehicleId={}",applicationId,vehicleId);
+        log.debug("Vehicle allocation business:applicationId={},vehicleId={}",applicationId,vehicleId);
         Application application = new Application();
         application.setId(applicationId);
         application.setVehicleId(vehicleId);
@@ -109,17 +109,18 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
     @Override
     public void back(Long applicationId,Long vehicleId){
-        log.debug("归还车辆业务:applicationId={},vehicleId={}",applicationId,vehicleId);
+        log.debug("Vehicle return service: applicationId={},vehicleId={}",applicationId,vehicleId);
         Application application = new Application();
-        application.setId(applicationId);//设置要更新哪个申请单
-        application.setVehicleId(vehicleId);//设置给当前申请单分配的车辆
-        application.setStatus(ApplicationStatusEnum.END.getCode());//设置申请单状态为"工单结束"
-        application.setUpdateTime(new Date());//设置更新时间
-        applicationMapper.update(application);//执行申请表更新操作
-        //车辆也需要改为占用状态
+        application.setId(applicationId);
+        application.setVehicleId(vehicleId);
+        application.setStatus(ApplicationStatusEnum.END.getCode());
+        application.setUpdateTime(new Date());
+        applicationMapper.update(application);
+        
+        //The vehicle also needs to be changed to an occupied state.
         Vehicle vehicle = new Vehicle();
-        vehicle.setId(vehicleId);//设置要更新哪辆车
-        vehicle.setStatus("1");//设置车辆状态为"空闲"
-        vehicleMapper.update(vehicle);//执行车辆表更新操作
+        vehicle.setId(vehicleId);
+        vehicle.setStatus("1");
+        vehicleMapper.update(vehicle);
     }
 }
