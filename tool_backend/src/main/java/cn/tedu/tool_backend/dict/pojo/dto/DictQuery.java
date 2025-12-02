@@ -5,10 +5,10 @@ import lombok.Data;
 
 @Data
 public class DictQuery {
-    @ApiModelProperty(value="字典id")
+    @ApiModelProperty(value="Dict id")
     private Long id;
-    @ApiModelProperty(value="字典名称")
+    @ApiModelProperty(value="Dict name")
     private String name;
-    @ApiModelProperty(value="字典编码")
+    @ApiModelProperty(value="Dict code")
     private String code;
 }
