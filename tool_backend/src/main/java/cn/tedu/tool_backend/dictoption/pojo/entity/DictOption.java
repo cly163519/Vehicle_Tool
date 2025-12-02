@@ -7,20 +7,20 @@ import java.util.Date;
 
 @Data
 public class DictOption {
-    @ApiModelProperty(value="字典id")
+    @ApiModelProperty(value="Dict id")
     private Long id;
-    @ApiModelProperty(value = "字典项id")
+    @ApiModelProperty(value = "Dict items id")
     private Long dictId;
-    @ApiModelProperty(value = "字典项名称")
+    @ApiModelProperty(value = "Dict items name")
     private String label;
-    @ApiModelProperty(value = "字典项值")
+    @ApiModelProperty(value = "Dict items value")
     private String value;
-    @ApiModelProperty(value = "字典项排序")
+    @ApiModelProperty(value = "Dict items order")
     private String sort;
-    @ApiModelProperty(value = "备注信息")
+    @ApiModelProperty(value = "Remarks")
     private String remark;
-    @ApiModelProperty(value = "创建时间")
+    @ApiModelProperty(value = "Creation time")
     private Date createTime;
-    @ApiModelProperty(value = "更新时间")
+    @ApiModelProperty(value = "Update time")
     private Date updateTime;
 }
