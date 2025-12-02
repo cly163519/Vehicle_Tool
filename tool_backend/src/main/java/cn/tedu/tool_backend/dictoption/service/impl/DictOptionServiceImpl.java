@@ -51,21 +51,21 @@ public class DictOptionServiceImpl implements DictOptionService {
 
     @Override
     public List<DictOptionVO> selectDictOptionByCode(String code) {
-        //封装字典查询DTO
+        //DTO encapsulation dictionary lookup
         DictQuery dictQuery = new DictQuery();
         dictQuery.setCode(code);
-        //根据code查出对应的字典
+        //Find the corresponding dictionary based on the code.
         List<DictVO> dictVOList = dictMapper.selectDictByCode(dictQuery);
-        if(dictVOList!=null&&dictVOList.size()>0){//list的值可能是null也可能是0,两个都需要预防
+        if(dictVOList!=null&&dictVOList.size()>0){
             DictVO dictVO = dictVOList.get(0);
-            //封装字典项查询DTO
+            //DTO (Dictionary Item Query)
             DictOptionQuery dictOptionQuery = new DictOptionQuery();
             dictOptionQuery.setDictId(dictVO.getId());
-            //查询对应的字典项
+            //Query the corresponding dictionary item
             List<DictOptionVO> dictOptionVOList = dictOptionMapper.selectDictOption(dictOptionQuery);
             return dictOptionVOList;
         }else{
-            //若查不到对应的字典,则抛出业务层异常数据不存在
+            //If the corresponding dictionary cannot be found, an exception will be thrown from the business layer indicating that the data does not exist.
             throw new ServiceException(StatusCode.DATA_UNEXISTS);
         }
     }
