@@ -5,12 +5,12 @@ import lombok.Data;
 
 @Data
 public class DictOptionQuery {
-    @ApiModelProperty(value = "字典项id")
+    @ApiModelProperty(value = "Dict itmes id")
     private Long id;
-    @ApiModelProperty(value = "字典id")
+    @ApiModelProperty(value = "Dict id")
     private Long dictId;
-    @ApiModelProperty(value = "字典项名称")
+    @ApiModelProperty(value = "Dict items name")
     private String label;
-    @ApiModelProperty(value = "字典项值")
+    @ApiModelProperty(value = "Dict item value")
     private String value;
 }
