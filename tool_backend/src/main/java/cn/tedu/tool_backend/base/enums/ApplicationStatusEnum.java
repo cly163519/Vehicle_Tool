@@ -7,13 +7,13 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ApplicationStatusEnum {
-    PENDING("10","已发起"),
-    CANCEL("20","撤销"),
-    AUDIT("30","审核中"),
-    REJECT("40","驳回"),
-    AUDITED("50","已审核"),
-    ALLOCATION("60","已分配用车"),
-    END("70","工单结束");
+    PENDING("10","Initiated"),
+    CANCEL("20","Cancel"),
+    AUDIT("30","Under review"),
+    REJECT("40","Rejection"),
+    AUDITED("50","Reviewed"),
+    ALLOCATION("60","Vehicles assigned"),
+    END("70","Closed");
 
     private String code;
     private String msg;
