@@ -7,15 +7,15 @@ import lombok.Data;
 import java.util.Date;
 @Data
 public class DictVO {
-    @ApiModelProperty(value="字典id")
+    @ApiModelProperty(value="Dict id")
     private Long id;
-    @ApiModelProperty(value="字典名称")
+    @ApiModelProperty(value="Dict name")
     private String name;
-    @ApiModelProperty(value="字典编码")
+    @ApiModelProperty(value="Dict code")
     private String code;
-    @ApiModelProperty(value="备注信息")
+    @ApiModelProperty(value="Remarks")
     private String remark;
-    @ApiModelProperty(value="创建时间")
+    @ApiModelProperty(value="Create time")
     @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
     private Date createTime;
 }
