@@ -20,13 +20,13 @@ public class UserController {
     UserService userService;
     @PostMapping("login")
         public JsonResult login(@RequestBody UserLoginParam userLoginParam){
-            log.debug("用户登录:userLoginParam={}",userLoginParam);
+            log.debug("User Login: userLoginParam={}",userLoginParam);
             UserVO userVO = userService.login(userLoginParam);
             return JsonResult.ok(userVO);
         }
     @PostMapping("save")
         public JsonResult saveUser(/*@RequestBody*/ UserSaveParam userSaveParam){
-            log.debug("用户保存:userSaveParam={}",userSaveParam);
+            log.debug("Save user: userSaveParam={}",userSaveParam);
             userService.saveUser(userSaveParam);
             return JsonResult.ok();
 
@@ -38,26 +38,26 @@ public class UserController {
     }
     @PostMapping("/update/password/{userId}")
     public JsonResult resetPassword(@PathVariable Long userId){
-        log.debug("重置密码, userId={}",userId);
+        log.debug("Reset password, userId={}",userId);
         userService.resetPassword(userId);
         return JsonResult.ok();
     }
     @PostMapping("/update/status/{userId}/{status}")
     public JsonResult updateStatus(@PathVariable Long userId, @PathVariable String status){
-        log.debug("修改用户状态,userId={},status={}",userId,status);
+        log.debug("Modify user status, userId={},status={}",userId,status);
         userService.updateStatus(userId,status);
         return JsonResult.ok();
     }
     @PostMapping("/delete/{userId}")
         public JsonResult deleteUser(@PathVariable Long userId){
-            log.debug("删除用户:userId={}",userId);
+            log.debug("Delete user: userId={}",userId);
             userService.deleteUser(userId);
             return JsonResult.ok();
         }
 
     @GetMapping("/select/audit/{parentId}")
     public JsonResult selectAuditList(@PathVariable Long parentId){
-        log.debug("查询审核人集合:parentId={}",parentId);
+        log.debug("Query the set of reviewers: parentId={}",parentId);
         List<UserVO> list = userService.selectAuditList(parentId);
         return JsonResult.ok();
     }
