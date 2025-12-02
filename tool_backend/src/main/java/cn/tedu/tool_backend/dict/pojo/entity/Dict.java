@@ -7,16 +7,16 @@ import java.util.Date;
 
 @Data
 public class Dict {
-    @ApiModelProperty(value="字典id")
+    @ApiModelProperty(value="Dict id")
     private Long id;
-    @ApiModelProperty(value="字典名称")
+    @ApiModelProperty(value="Dict name")
     private String name;
-    @ApiModelProperty(value="字典编码")
+    @ApiModelProperty(value="Dict code")
     private String code;
-    @ApiModelProperty(value="备注信息")
+    @ApiModelProperty(value="Remarks")
     private String remark;
-    @ApiModelProperty(value="创建时间")
+    @ApiModelProperty(value="Creation time")
     private Date createTime;
-    @ApiModelProperty(value="更新时间")
+    @ApiModelProperty(value="Update time")
     private Date updateTime;
 }
