@@ -1,13 +1,13 @@
-<!--父级页面:控制除了登录页以外所有页面共有的头部与左侧菜单栏-->
+<!-- Parent page: Controls the header and left menu bar shared by all pages except the login page. -->
 <template>
-  <!--display: flex;表示给父元素使用弹性布局
-  效果:所有子元素横置,且父元素会根据子元素横置后的实际高度自动填充高度 -->
+  <!--display: flex;This indicates that flex layout is being used on the parent element.
+  Effect: All child elements are horizontally positioned, and the parent element automatically fills the height according to the actual height of the child elements after horizontal positioning. -->
   <div style="display: flex;">
-    <!-- 左侧菜单栏 可折叠 折叠时宽度为64px 不折叠时宽度为208px -->
+    <!-- The left-side menu bar is collapsible. When collapsed, its width is 64px; when not collapsed, its width is 208px -->
     <div :style="{width:( isCollapse ? '64px' : '208px' )}">
-      <!-- 菜单栏
-      width:100%;宽度占满左侧菜单栏宽度 64px或 208px
-      height:100vh; 高度占满整个屏幕高度，固定就是100vh -->
+      <!-- Menu bar
+      width: 100%; The width fills the entire width of the left menu bar, 64px or 208px.
+      height: 100vh; The height fills the entire screen height, fixed at 100vh. -->
       <el-menu
           background-color="#3C82F5"
           text-color="#fff"
@@ -19,16 +19,15 @@
           unique-opened
           @select="selectMenu"
       >
-        <!-- 左侧菜单栏的顶部条 -->
+        <!-- Top bar of the left-hand menu -->
         <el-row style="padding-top:10px;">
           <el-col :span="2"></el-col>
           <el-col :span="7" style="padding-left:7px;">
             <el-avatar src="/imgs/admin/logo.png" style="width: 35px;height: 35px;"></el-avatar>
           </el-col>
           <el-col :span="isCollapse ? 0 : 13">
-            <router-link to="/"
-                         style="color:#fff;text-decoration:none;font-weight:bold;position:relative;top:8px;left:2px;">
-              智慧车辆
+            <router-link to="/" style="color:#fff;text-decoration:none;font-weight:bold;position:relative;top:8px;left:2px;">
+              Vehicle Tool
             </router-link>
           </el-col>
         </el-row>
@@ -38,55 +37,55 @@
             <el-icon style="font-size:21px;">
               <User/>
             </el-icon>
-            <span>用户管理</span>
+            <span>User management</span>
           </template>
-          <el-menu-item index="/user">用户列表</el-menu-item>
+          <el-menu-item index="/user">User list</el-menu-item>
         </el-sub-menu>
         <el-sub-menu index="2">
           <template #title>
             <el-icon style="font-size:21px;">
               <Van/>
             </el-icon>
-            <span>车辆管理</span>
+            <span>Vehicle management</span>
           </template>
-          <el-menu-item index="/vehicle">基本信息</el-menu-item>
+          <el-menu-item index="/vehicle">Basic info</el-menu-item>
         </el-sub-menu>
         <el-sub-menu index="3">
           <template #title>
             <el-icon style="font-size:21px;">
               <Place/>
             </el-icon>
-            <span>调度管理</span>
+            <span>Dispatch Management</span>
           </template>
-          <el-menu-item index="/application">申请列表</el-menu-item>
-          <el-menu-item index="/audit">调度审核</el-menu-item>
-          <el-menu-item index="/distribute">车辆分配</el-menu-item>
+          <el-menu-item index="/application">Application list</el-menu-item>
+          <el-menu-item index="/audit">Dispatch review</el-menu-item>
+          <el-menu-item index="/distribute">Vehicle allocation</el-menu-item>
         </el-sub-menu>
         <el-sub-menu index="4">
           <template #title>
             <el-icon style="font-size:21px;">
               <Location/>
             </el-icon>
-            <span>电子围栏</span>
+            <span>Electric fence</span>
           </template>
-          <el-menu-item index="/geofence">围栏管理</el-menu-item>
+          <el-menu-item index="/geofence">Fence management</el-menu-item>
         </el-sub-menu>
         <el-sub-menu index="5">
           <template #title>
             <el-icon style="font-size:21px;">
               <MessageBox/>
             </el-icon>
-            <span>数据字典</span>
+            <span>Data dictionary</span>
           </template>
-          <el-menu-item index="/dict">字典管理</el-menu-item>
+          <el-menu-item index="/dict">Dictionary Management</el-menu-item>
         </el-sub-menu>
       </el-menu>
     </div>
-    <!-- 右侧主体内容 永远占满剩余宽度 -->
+    <!-- The main content on the right always fills the remaining width -->
     <div :style="{width:(isCollapse ? 'calc(100% - 64px)' : 'calc(100% - 208px)')}">
-      <!-- 右侧顶部条 -->
+      <!-- Top right bar -->
       <el-header style="padding-top:22px;height:10vh;background-color:#fff;">
-        <!--折叠图标与退出登录-->
+        <!-- Collapse icon and logout  -->
         <el-row :gutter="10">
           <el-col :span="18">
             <el-icon style="font-size:20px;float:left;" @click="changeCollapsed">
@@ -101,20 +100,20 @@
               </span>
               <template #dropdown>
                 <el-dropdown-menu>
-                  <el-dropdown-item @click="logout">退出登录</el-dropdown-item>
+                  <el-dropdown-item @click="logout">Log out</el-dropdown-item>
                 </el-dropdown-menu>
               </template>
             </el-dropdown>
           </el-col>
         </el-row>
-        <!-- 面包屑导航 -->
+        <!-- Breadcrumb navigation -->
         <el-breadcrumb separator="/" style="position:relative;top:20px;">
-          <el-breadcrumb-item>首页</el-breadcrumb-item>
+          <el-breadcrumb-item>Home page</el-breadcrumb-item>
           <el-breadcrumb-item v-for="item in breadCrumb">{{item}}</el-breadcrumb-item>
         </el-breadcrumb>
       </el-header>
-      <!-- 右侧主体内容 除顶部条与面包屑的部分都是可变区域,在对应的子级页面里写!
-      height:90vh;高度是固定的90vh overflow-y: auto;垂直方向溢出自动显示滚动条-->
+      <!-- The main content on the right, excluding the top bar and breadcrumbs, is a variable area; write your content in the corresponding child page!
+      height:90vh; 90vh overflow-y: auto; Automatically display scrollbar when vertical overflow occurs-->
       <el-main style="padding:0;height:90vh;overflow-y: auto;">
         <router-view/>
       </el-main>
@@ -125,53 +124,50 @@
 <script setup>
 import {ref} from "vue";
 
-//获取当前登录的用户信息
+//Get currently logged-in user information
 const user = ref(getUser());
 
-//定义变量控制左侧菜单栏是否折叠
+//Define a variable to control whether the left-side menu bar is collapsed
 const isCollapse = ref(false);
-//定义方法切换左侧菜单栏是否折叠
+//Define a method to toggle whether the left-side menu bar is collapsed
 const changeCollapsed = () => {
   isCollapse.value = !isCollapse.value;
 }
 
-//设置变量来维护面包屑导航的值,默认为用户列表界面
-//如果第1次打开,localStorage.getItem('breadcrumb')取不到值,则默认值为["用户管理","用户列表"]
-//如果不是第1次开打开,localStorage里有值,取到什么值,就显示什么值
+// Set variables to maintain the value of the breadcrumb navigation; the default value is the user list interface.
+// If it's the first time opening, localStorage.getItem('breadcrumb') won't retrieve a value, so the default value will be ["User Management", "User List"].
+// If it's not the first time opening, and there's a value in localStorage, then whatever value is retrieved will be displayed.
 const breadCrumb = ref(
-    JSON.parse(localStorage.getItem('breadcrumb') || '["用户管理","用户列表"]'));
-//准备对象用来维护对应页面与面包屑导航的对应关系
-//准备数组用来存面包屑导航的值
+    JSON.parse(localStorage.getItem('breadcrumb') || '["User management","User list"]'));
+// Prepare an object to maintain the mapping between the corresponding page and the breadcrumb navigation
+// Prepare an array to store the values ​​of the breadcrumb navigation
 let map = {
-  "/user": ['用户管理','用户列表'],
-  "/vehicle": ['车辆管理','基本信息'],
-  "/geofence": ['电子围栏','围栏管理'],
-  "/application": ['调度管理','申请列表'],
-  "/audit": ['调度管理','调度审核'],
-  "/distribute": ['调度管理','车辆分配'],
-  "/dict": ['数据字典','字典管理']
-};
-//选择菜单项时触发,index是选了哪一个菜单项
+  "/user": ['user management','user list'],
+  "/vehicle": ['vehicle management','basic info'],
+  "/geofence": ['electric fence','fence management'],
+  "/application": ['dispatch management','application list'],
+  "/audit": ['dispatch management','dispatch review'],
+  "/distribute": ['dispatch management','vehicle allocation'],
+  "/dict": ['data dict','dict management']
+};To resolve the issue of lost breadcrumb values ​​upon page refresh: store them in localStorage.
+//Triggered when a menu item is selected; index indicates which menu item was selected
 const selectMenu = (index)=>{
-  //根据选择的菜单项设置面包屑导航的值
+  //Set the value of the breadcrumb navigation based on the selected menu item
   breadCrumb.value = map[index];
-  //解决刷新页面面包屑值丢失的问题:存到localStorage中
+  //To resolve the issue of lost breadcrumb values ​​upon page refresh: store them in localStorage.
   localStorage.setItem("breadcrumb",JSON.stringify(breadCrumb.value));
 }
 
-//退出登录功能
+//Log out
 const logout = ()=>{
-  if(confirm('您确认要退出吗?')){
-    //退出时清空localStorage中存的用户与面包屑信息
+  if(confirm('Log out?')){
+    //Clear user and breadcrumb information stored in localStorage upon exit
     localStorage.removeItem('user');
     localStorage.removeItem('breadcrumb');
-    //退出后去到登录页
+    //After logging out, you will be redirected to the login page
     window.location.href = '/login';
-    //也需要把已经取出来的值清空
+    //It is also necessary to clear the values ​​that have already been retrieved
     user.value = '';
   }
 }
-
-
-
 </script>
