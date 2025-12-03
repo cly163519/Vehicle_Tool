@@ -1,4 +1,4 @@
-<!--登录页-->
+<!--Login page-->
 <template>
   <div style="height:100vh;background-image:linear-gradient(135deg,#1352F2,#3C82F5);overflow:hidden;">
     <el-container style="padding:30px;">
@@ -14,7 +14,7 @@
             <img src="/imgs/login/verticalLine.png" style="height: 50px;">
           </el-col>
           <el-col :span="19">
-            <span style="color:#fff;font-size:30px;font-weight:bold;">智慧车辆运营管理系统</span>
+            <span style="color:#fff;font-size:30px;font-weight:bold;">Vehicle Operation Management System</span>
           </el-col>
         </el-row>
       </el-header>
@@ -25,20 +25,20 @@
           </el-col>
           <el-col :span="8">
             <el-card style="margin-top:80px;">
-              <h3 style="text-align:center;">用户登录</h3>
+              <h3 style="text-align:center;">User login</h3>
               <el-form label-position="top">
-                <el-form-item label="用户名">
-                  <el-input placeholder="请输入用户名" v-model="user.username"></el-input>
+                <el-form-item label="Username">
+                  <el-input placeholder="Please enter username" v-model="user.username"></el-input>
                 </el-form-item>
-                <el-form-item label="密码">
-                  <el-input placeholder="请输入密码" type="password" v-model="user.password"></el-input>
+                <el-form-item label="Password">
+                  <el-input placeholder="Please enter password" type="password" v-model="user.password"></el-input>
                 </el-form-item>
                 <el-form-item>
-                  <el-button type="primary" style="width:100%;" @click="login">登录</el-button>
+                  <el-button type="primary" style="width:100%;" @click="login">Login</el-button>
                 </el-form-item>
               </el-form>
               <div style="color:#666;text-align:center;font-size:14px;padding:10px 0;">
-                (体验账号:tom 密码:123456)
+                (Test account:tom Password:123456)
               </div>
             </el-card>
           </el-col>
@@ -57,26 +57,26 @@ import router from "@/router";
 const user = ref({username:'',password:''});
 const login = ()=>{
   //console.log(user.value);
-  //向后端发登录请求
+  //Send login request to the backend
   axios.post(BASE_URL+'/v1/user/login',user.value)
       .then((response)=>{
-        //回调函数：后端服务器响应后执行此处代码
-        //response里装着响应内容，我们通过response.data得到服务器响应的数据
+        //Callback function: This code is executed after the backend server responds.
+        //response contains the response content; we obtain the server's response data through response.data.
         console.log(response.data);
         if(response.data.code === 2000){
-          ElMessage.success('登录成功!');
-          //localStorage只能存字符串类型的键值对
-          console.log(response.data);//后端返回的JsonResult
-          console.log(response.data.data);//JsonResult中的data也就是userVO
-          console.log(JSON.stringify(response.data.data));//将JS对象转为JSON字符串
-          //登录成功后,将后端返回的当前用户信息存入localStorage中
+          ElMessage.success('Succeed!');
+          //localStorage can only store key-value pairs of string type.
+          console.log(response.data);//Returned by backend JsonResult
+          console.log(response.data.data);//The data in JsonResult is userVO
+          console.log(JSON.stringify(response.data.data));//Convert JS objects to JSON strings
+          //After successful login, store the current user information returned by the backend in localStorage.
           localStorage.setItem('user',JSON.stringify(response.data.data));
 
-          //登录成功后会跳转至首页,router/index.js配置了会重定向到/user用户列表页
+          //After successful login, you will be redirected to the homepage. The router/index.js configuration will redirect to the /user user list page.
           router.push('/');
         }else{
           ElMessage.error(response.data.msg);
-          //登录失败清空输入框
+          //Login failed, clear input box
           user.value = {username:'',password:''};
         }
       })
