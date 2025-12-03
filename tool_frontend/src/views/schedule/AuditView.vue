@@ -1,92 +1,89 @@
-<!--申请审批页-->
+<!--Application audit page-->
 <template>
-  <!-- 顶部条 -->
   <div style="height: 6vh;background-color:#fff;padding:10px 20px;">
-    <span style="line-height:60px;font-size:20px;">审批列表</span>
+    <span style="line-height:60px;font-size:20px;">Audit list</span>
   </div>
-  <!-- 审批搜索卡片 -->
+  <!-- Audit search card -->
   <el-card style="margin:20px;height: 70px;">
     <el-form :inline="true">
-      <el-form-item label="用车人">
-        <!-- 因为我们只有一个表单项,提交这个表单项就相当于提交整个表单,提交表单默认会刷新整个页面
-         所以敲回车事件需要加.prevent修饰符阻止提交表单项时的页面默认刷新 -->
-        <el-input placeholder="请输入用车人" style="width:220px;"
+      <el-form-item label="Vehicle user">
+        <el-input placeholder="Please enter the vehicle user's name." style="width:220px;"
                   @keydown.enter.prevent="loadAudit" v-model="search.username"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button @click="resetSearch">重置</el-button>
-        <el-button type="primary" @click="loadAudit">查询</el-button>
+        <el-button @click="resetSearch">Reset</el-button>
+        <el-button type="primary" @click="loadAudit">Research</el-button>
       </el-form-item>
     </el-form>
   </el-card>
 
-  <!-- 审批单主体 -->
+  <!-- Audit body -->
   <el-card style="margin:20px;">
-    <!--  审批状态项  -->
+    <!--  Audit status item  -->
     <el-radio-group style="margin-bottom: 15px;"
                     v-model="type" @change="loadAudit">
-      <el-radio-button value="10" size="large">待我审核</el-radio-button>
-      <el-radio-button value="20" size="large">待他人审核</el-radio-button>
-      <el-radio-button value="30" size="large">已审核</el-radio-button>
-      <el-radio-button value="40" size="large">驳回</el-radio-button>
+      <el-radio-button value="10" size="large">Wait for review by me</el-radio-button>
+      <el-radio-button value="20" size="large">Wait for review by others</el-radio-button>
+      <el-radio-button value="30" size="large">Reviewed</el-radio-button>
+      <el-radio-button value="40" size="large">Reject</el-radio-button>
     </el-radio-group>
-    <!--  审批列表  -->
+    <!-- Audit list -->
     <el-table :data="auditArr">
-      <el-table-column label="编号" prop="id" align="center" width="55" type="index"></el-table-column>
-      <el-table-column label="用车人" prop="username" align="center" width="110"></el-table-column>
-      <el-table-column label="开始时间" prop="startTime"  align="center"></el-table-column>
-      <el-table-column label="结束时间" prop="endTime"  align="center"></el-table-column>
-      <el-table-column label="用车事由" prop="reason"  align="center"></el-table-column>
-      <el-table-column label="审批人" prop="auditUsernameList"  align="center"></el-table-column>
-      <el-table-column label="出发地" prop="departureAddr"  align="center"></el-table-column>
-      <el-table-column label="目的地" prop="destinationAddr"  align="center"></el-table-column>
-      <el-table-column label="操作" width="100" align="center" v-if="type==10||type==40" :key="audit">
+      <el-table-column label="number" prop="id" align="center" width="55" type="index"></el-table-column>
+      <el-table-column label="Vehicle user" prop="username" align="center" width="110"></el-table-column>
+      <el-table-column label="Start time" prop="startTime"  align="center"></el-table-column>
+      <el-table-column label="End time" prop="endTime"  align="center"></el-table-column>
+      <el-table-column label="Reason for vehicle use" prop="reason"  align="center"></el-table-column>
+      <el-table-column label="Reviewer" prop="auditUsernameList"  align="center"></el-table-column>
+      <el-table-column label="Departure" prop="departureAddr"  align="center"></el-table-column>
+      <el-table-column label="Destination" prop="destinationAddr"  align="center"></el-table-column>
+      <el-table-column label="Operation" width="100" align="center" v-if="type==10||type==40" :key="audit">
         <template #default="scope">
-          <!-- 审批10：在待我审核页签下显示，需要当前登录用户进行审批 -->
-          <el-button type="primary" link v-if="type==10" @click="auditing(scope.row.id)">审批</el-button>
-          <!-- 查看40：在驳回页签下显示，可以查看已驳回申请的驳回原因 -->
-          <el-button type="primary" link v-if="type==40" @click="auditing(scope.row.id)">查看</el-button>
+          <!-- Approval 10: Displayed under the "Pending My Review" tab, requires approval from the currently logged-in user. -->
+          <el-button type="primary" link v-if="type==10" @click="auditing(scope.row.id)">Approval</el-button>
+          <!-- View 40: Under the Rejection tab, you can view the reasons for rejection of rejected applications. -->
+          <el-button type="primary" link v-if="type==40" @click="auditing(scope.row.id)">Check</el-button>
         </template>
       </el-table-column>
     </el-table>
   </el-card>
 
-  <!-- 审批/查看弹窗 -->
+  <!-- Approval/View pop-up window -->
   <el-dialog :title="dialogTitle" v-model="auditDialogVisible">
     <el-descriptions direction="horizontal" :column="2" border>
-      <el-descriptions-item label="用车人">{{ auditDialogData.username }}</el-descriptions-item>
-      <el-descriptions-item label="用车事由">{{ auditDialogData.reason }}</el-descriptions-item>
-      <el-descriptions-item label="使用开始时间">{{ auditDialogData.startTime }}</el-descriptions-item>
-      <el-descriptions-item label="使用结束时间">{{ auditDialogData.endTime }}</el-descriptions-item>
-      <el-descriptions-item label="车辆出发地">{{ auditDialogData.departureAddr }}</el-descriptions-item>
-      <el-descriptions-item label="车辆目的地">{{ auditDialogData.destinationAddr }}</el-descriptions-item>
-      <el-descriptions-item label="驾照图片">
+      <el-descriptions-item label="Car user">{{ auditDialogData.username }}</el-descriptions-item>
+      <el-descriptions-item label="Reason for vehicle use">{{ auditDialogData.reason }}</el-descriptions-item>
+      <el-descriptions-item label="Use start time">{{ auditDialogData.startTime }}</el-descriptions-item>
+      <el-descriptions-item label="Use end time">{{ auditDialogData.endTime }}</el-descriptions-item>
+      <el-descriptions-item label="Vehicle departure point">{{ auditDialogData.departureAddr }}</el-descriptions-item>
+      <el-descriptions-item label="Vehicle destination">{{ auditDialogData.destinationAddr }}</el-descriptions-item>
+      <el-descriptions-item label="Driver's license image">
         <img :src="BASE_URL+auditDialogData.imgUrl" style="width:150px;">
       </el-descriptions-item>
-      <el-descriptions-item label="备注">{{ auditDialogData.remark }}</el-descriptions-item>
-      <!--  驳回原因要在点击驳回才显示 -->
-      <el-descriptions-item label="驳回原因"
+      <el-descriptions-item label="Remark">{{ auditDialogData.remark }}</el-descriptions-item>
+      <!--  The reason for rejection will only be displayed after clicking "Reject"  -->
+      <el-descriptions-item label="Rejection reason"
                             v-if="auditDialogData.auditStatus==40">{{ auditDialogData.rejectReason }}</el-descriptions-item>
     </el-descriptions>
-    <!-- 只有在"待我审核时才显示下方的三个操作按钮"   -->
+    <!-- The three action buttons below will only be displayed when I review them   -->
     <template #footer v-if="auditDialogData.auditStatus==10">
-      <el-button @click="auditDialogVisible=false">取消</el-button>
-      <el-button type="primary" plain @click="rejectInnerDialogVisible=true">驳回</el-button>
-      <el-button type="primary" @click="auditPass">通过</el-button>
+      <el-button @click="auditDialogVisible=false">Cancel</el-button>
+      <el-button type="primary" plain @click="rejectInnerDialogVisible=true">Reject</el-button>
+      <el-button type="primary" @click="auditPass">Pass</el-button>
     </template>
   </el-dialog>
 
-  <!-- 驳回原因弹窗 -->
-  <el-dialog title="驳回 查看" v-model="rejectInnerDialogVisible" style="margin-top: 37vh;"
+  <!-- Rejection Reason Pop-up -->
+  <el-dialog title="Rejected. (See details)" v-model="rejectInnerDialogVisible" style="margin-top: 37vh;"
              :before-close="rejectConfirm">
     <el-descriptions direction="horizontal" border>
-      <el-descriptions-item label="驳回原因">
-        <el-input placeholder="请输入驳回原因" v-model="rejectReason"></el-input>
+      <el-descriptions-item label="Rejection reason">
+        <el-input placeholder="Enter rejection reason" v-model="rejectReason"></el-input>
       </el-descriptions-item>
     </el-descriptions>
     <template #footer>
-      <el-button type="primary" plain @click="rejectConfirm">取消</el-button>
-      <el-button type="primary" @click="auditReject">确定</el-button>
+      <el-button type="primary" plain @click="rejectConfirm">Cancel</el-button>
+      <el-button type="primary" @click="auditReject">Enter</el-button>
     </template>
   </el-dialog>
 </template>
@@ -224,10 +221,6 @@ const rejectConfirm = ()=>{
     rejectReason.value = '';
   }
 }
-
-
 </script>
-
 <style>
-
 </style>
