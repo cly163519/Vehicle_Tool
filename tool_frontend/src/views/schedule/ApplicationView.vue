@@ -1,29 +1,29 @@
-<!--用车申请页-->
+<!-- Vehicle application page -->
 <template>
   <div style="height: 6vh;background-color:#fff;padding:10px 20px;">
-    <span style="line-height:60px;font-size:20px;">申请单列表</span>
+    <span style="line-height:60px;font-size:20px;">Application Form List</span>
     <el-button type="primary" style="float:right;margin-top:13px;"
                @click="addApplicationDialogVisible=true"
-               :disabled="user.parentId==null">申请用车</el-button>
-    <!--  v-if="user.parentId!=null 如果是总裁(没有上级的职级)无需申请用车 可以禁用或隐藏按钮 -->
+               :disabled="user.parentId==null">Apply for a car</el-button>
+    <!--  v-if="user.parentId!=null If the person is the CEO (without a superior rank), no car application is required; the button can be disabled or hidden -->
   </div>
-  <!-- 申请用车弹窗 -->
-  <el-dialog title="创建申请单" v-model="addApplicationDialogVisible"
+  <!-- Application for car rental pop-up window -->
+  <el-dialog title="Create application form" v-model="addApplicationDialogVisible"
              style="width:1000px;padding:40px;" :before-close="handleClose">
     <el-form label-width="80px" label-position="top">
       <el-row :gutter="30">
         <el-col :span="12">
-          <el-form-item label="用车人">
+          <el-form-item label="Car user">
             <el-input readonly :value="user.username"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="使用时间">
+          <el-form-item label="Usage time">
             <el-date-picker
                 type="datetimerange"
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
+                range-separator="to"
+                start-placeholder="Start date"
+                end-placeholder="End date"
                 value-format="YYYY-MM-DD HH:mm:ss"
                 format="YYYY-MM-DD HH:mm:ss"
                 v-model="times"
@@ -33,31 +33,31 @@
       </el-row>
       <el-row :gutter="30">
         <el-col :span="12">
-          <el-form-item label="车辆出发地">
-            <el-input placeholder="请输入" v-model="addForm.departureAddr"></el-input>
+          <el-form-item label="Vehicle departure point">
+            <el-input placeholder="Please enter" v-model="addForm.departureAddr"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="车辆目的地">
-            <el-input placeholder="请输入" v-model="addForm.destinationAddr"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row :gutter="30">
-        <el-col :span="12">
-          <el-form-item label="用车事由">
-            <el-input placeholder="请输入" type="textarea" resize="none" :rows="3" v-model="addForm.reason"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="备注">
-            <el-input placeholder="请输入" type="textarea" resize="none" :rows="3" v-model="addForm.remark"></el-input>
+          <el-form-item label="Vehicle destination">
+            <el-input placeholder="Please enter" v-model="addForm.destinationAddr"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="30">
         <el-col :span="12">
-          <el-form-item label="驾照">
+          <el-form-item label="Reason for vehicle use">
+            <el-input placeholder="Please enter" type="textarea" resize="none" :rows="3" v-model="addForm.reason"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="Remark">
+            <el-input placeholder="Please enter" type="textarea" resize="none" :rows="3" v-model="addForm.remark"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="30">
+        <el-col :span="12">
+          <el-form-item label="Driver lisence">
             <el-upload
                 v-model:file-list="fileList"
                 v-model:action="actionUrl"
@@ -77,7 +77,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="审批人">
+          <el-form-item label="Approver">
             <el-row :gutter="10">
               <el-col :span="12" v-if="auditUserOpts.length > 0">
                 <el-tag type="primary">
@@ -101,35 +101,35 @@
       </el-row>
     </el-form>
     <template #footer>
-      <el-button @click="handleClose">取消</el-button>
-      <el-button type="primary" @click="addApplication">确定</el-button>
+      <el-button @click="handleClose">Cancel</el-button>
+      <el-button type="primary" @click="addApplication">Enter</el-button>
     </template>
   </el-dialog>
 
-  <!-- 用车申请列表 搜索卡片 -->
+  <!-- Car Use Application List Search Card -->
   <el-card style="margin: 20px;">
     <el-form style="padding-top:10px;">
       <el-row :gutter="30">
         <el-col :span="5">
-          <el-form-item label="出发地">
-            <el-input placeholder="请输入出发地" v-model="searchApplication.departureAddr"></el-input>
+          <el-form-item label="Departure">
+            <el-input placeholder="Enter departure" v-model="searchApplication.departureAddr"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="5">
-          <el-form-item label="目的地">
-            <el-input placeholder="请输入目的地" v-model="searchApplication.destinationAddr"></el-input>
+          <el-form-item label="Destination">
+            <el-input placeholder="Enter destination" v-model="searchApplication.destinationAddr"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="5">
-          <el-form-item label="申请单状态">
-            <el-select placeholder="请选择" v-model="searchApplication.status">
-              <!--              <el-option label="已发起" value="10"></el-option>-->
-              <!--              <el-option label="撤销" value="20"></el-option>-->
-              <!--              <el-option label="审核中" value="30"></el-option>-->
-              <!--              <el-option label="驳回" value="40"></el-option>-->
-              <!--              <el-option label="已通过" value="50"></el-option>-->
-              <!--              <el-option label="分配用车" value="60"></el-option>-->
-              <!--              <el-option label="工单结束" value="70"></el-option>-->
+          <el-form-item label="Application status">
+            <el-select placeholder="Please select" v-model="searchApplication.status">
+              <!-- <el-option label="Initiated" value="10"></el-option>-->
+              <!-- <el-option label="Cancel" value="20"></el-option>-->
+              <!-- <el-option label="Under review" value="30"></el-option>-->
+              <!-- <el-option label="Reject" value="40"></el-option>-->
+              <!-- <el-option label="Approved" value="50"></el-option>-->
+              <!-- <el-option label="Vehicle allocation" value="60"></el-option>-->
+              <!-- <el-option label="Closed" value="70"></el-option>-->
               <el-option v-for="item in auditOptions"
                          :label="item.label" :value="item.value"></el-option>
             </el-select>
@@ -137,30 +137,30 @@
         </el-col>
         <el-col :span="5">
           <el-form-item>
-            <el-button @click="resetSearch">重置</el-button>
-            <el-button type="primary" @click="loadApplication">查询</el-button>
+            <el-button @click="resetSearch">Reset</el-button>
+            <el-button type="primary" @click="loadApplication">Research</el-button>
           </el-form-item>
         </el-col>
       </el-row>
     </el-form>
   </el-card>
-  <!-- 用车申请表格 -->
+  <!-- Vehicle Use Application Form -->
   <el-card style="margin:20px">
     <el-table :data="tableData">
-      <el-table-column type="index" width="80" align="center" prop="id" label="编号"></el-table-column>
-      <el-table-column align="center" prop="username" label="申请人"></el-table-column>
-      <el-table-column align="center" prop="departureAddr" label="出发地"></el-table-column>
-      <el-table-column align="center" prop="destinationAddr" label="目的地"></el-table-column>
-      <el-table-column align="center" prop="reason" label="用车原因"></el-table-column>
-      <el-table-column align="center" prop="auditUsernameList" label="审批人"></el-table-column>
-      <el-table-column align="center" prop="startTime" label="使用开始时间"></el-table-column>
-      <el-table-column align="center" prop="endTime" label="使用结束时间"></el-table-column>
-      <el-table-column align="center" prop="status" label="申请单状态"
+      <el-table-column type="index" width="80" align="center" prop="id" label="Number"></el-table-column>
+      <el-table-column align="center" prop="username" label="Applicant"></el-table-column>
+      <el-table-column align="center" prop="departureAddr" label="Departure"></el-table-column>
+      <el-table-column align="center" prop="destinationAddr" label="Destination"></el-table-column>
+      <el-table-column align="center" prop="reason" label="Reason for using the vehicle"></el-table-column>
+      <el-table-column align="center" prop="auditUsernameList" label="Reviewer"></el-table-column>
+      <el-table-column align="center" prop="startTime" label="Use start time"></el-table-column>
+      <el-table-column align="center" prop="endTime" label="Use end time"></el-table-column>
+      <el-table-column align="center" prop="status" label="Application for status"
                        :formatter="appStatusFormatter"></el-table-column>
-      <el-table-column label="操作" width="120" align="center">
+      <el-table-column label="Operation" width="120" align="center">
         <template #default="scope">
           <el-button type="primary" size="small" link
-                     :disabled="scope.row.status!=10" @click="cancel(scope.row.id)">撤销</el-button>
+                     :disabled="scope.row.status!=10" @click="cancel(scope.row.id)">Cancel</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -172,25 +172,25 @@ import {onMounted, ref} from "vue";
 import axios from "axios";
 import {ElMessage} from "element-plus";
 import qs from "qs";
-//定义变量控制创建申请单弹窗是否出现
+//Define variables to control whether the application form pop-up appears
 const addApplicationDialogVisible = ref(false);
 
-//获取当前登录的用户信息
+//Get currently logged-in user information
 const user = ref(getUser());
-//定义数组用来保存新增申请表单中的审批人(含姓名)
+//Define an array to store the approvers (including their names) from the newly added application forms.
 const auditUserOpts = ref([]);
-//定义数组用来保存新增申请单时,对应的审批人id,入库使用
+//Define an array to store the approver ID corresponding to each new application form, for use in database entry.
 const auditUserIdList = ref([]);
-//定义加载审批人的方法
+//Define the method for loading approvers
 const loadAuditUser = ()=>{
-  //获取当前登录用户的上级id
+  //Get the parent ID of the currently logged-in user
   let parentId = user.value.parentId;
-  //根据父级id查询对应的领导信息
+  //Retrieve the corresponding leader information based on the parent ID.
   axios.get(BASE_URL+'/v1/user/select/audit/'+parentId).then((response)=>{
     if(response.data.code==2000){
       auditUserOpts.value = response.data.data;
-      //依次取出auditUserOpts中的每个审批人,获取审批人的id
-      //并依次存入auditUserIdList数组中,在新增申请时一起发给后端
+      // Retrieve each approver from auditUserOpts and obtain their ID.
+      // Store them sequentially in the auditUserIdList array, and send them to the backend along with any new application.
       for(let i = 0; i<auditUserOpts.value.length ;i++){
         auditUserIdList.value.push(auditUserOpts.value[i].id);
       }
@@ -199,99 +199,100 @@ const loadAuditUser = ()=>{
 }
 
 onMounted(()=>{
-  //因为当前申请人(登录人)的直属领导数据是固定的,所以只需要在页面加载时请求一次即可,无需重复请求
+  //Since the direct supervisor data of the current applicant (login user) is fixed, 
+  //it only needs to be requested once when the page loads, and there is no need to make repeated requests.
   loadAuditUser();
 })
-//用车人是从localstorage中获取的,是当前登录的用户名,不允许输入,就不用双向绑定获取输入的值了
-//审批人是从后端查出来的固定值，所以也不用双向绑定获取输入的值了
-//定义变量用来保存表单中的"使用时间",注意:这是一个数组，包含开始时间与结束时间
+//The user ID is retrieved from localstorage; it's the currently logged-in username. Since input is not allowed, two-way binding is unnecessary to retrieve the input value.
+//The approver is a fixed value retrieved from the backend, so two-way binding is also unnecessary to retrieve the input value.
+//Define a variable to store the "usage time" in the form. Note: This is an array containing the start and end times.
 const times = ref([]);
-//定义对象用来保存申请单表单数据
+//Define an object to store application form data.
 const addForm = ref({
-  departureAddr: '', //出发地
-  destinationAddr: '', //目的地
-  reason: '', //用车事由
-  remark:'' //备注信息
+  departureAddr: '', //Departure
+  destinationAddr: '', //Destination
+  reason: '', //Reason for using car
+  remark:'' //Remark
 });
-//定义方法发送新增申请单请求
+//Define a method to send a new application request
 const addApplication = ()=>{
   if(fileList.value.length==0){
-    ElMessage.error('请上传图片!');
+    ElMessage.error('Upload image!');
     return;
   }
-  //从upload图片上传组件中获取上传图片的路径 fileList.value[0]表示第一张图片对象
-  //.response.data 是我们uploadController返回的 /2024/06/18/UUID.suffix
-  addForm.value.imgUrl = fileList.value[0].response.data;//驾照图片路径
-  addForm.value.userId = user.value.id;//申请人id
-  addForm.value.username = user.value.username;//申请人姓名
-  addForm.value.startTime = times.value[0];//开始时间
-  addForm.value.endTime = times.value[1];//结束时间
-  //注意:审批人id数据也需要一起给到后端,因为事务性新增,审批表的数据也需要一起更新!
-  addForm.value.auditUserIdList = auditUserIdList.value;//审批人id集合
+  // Get the path of the uploaded image from the upload image component. fileList.value[0] represents the first image object
+ //.response.data is returned by our uploadController /2024/06/18/UUID.suffix
+  addForm.value.imgUrl = fileList.value[0].response.data;//Driver's license image path
+  addForm.value.userId = user.value.id;//Applicant's id
+  addForm.value.username = user.value.username;//Applicant's name
+  addForm.value.startTime = times.value[0];//Start time
+  addForm.value.endTime = times.value[1];//End time
+  //Note: The approver ID data also needs to be provided to the backend, 
+  //because the data in the approval table needs to be updated accordingly for transactional additions
+  addForm.value.auditUserIdList = auditUserIdList.value;//Reviewer id list
   console.log(addForm.value);
   let data = qs.stringify(addForm.value);
   axios.post(BASE_URL+'/v1/application/save',data).then((response)=>{
     if(response.data.code==2000){
-      ElMessage.success('申请成功!');
+      ElMessage.success('Succeed!');
       addApplicationDialogVisible.value = false;
-      fileList.value = [];//图片上传组件清空
-      times.value = [];//起止时间清空
-      addForm.value = {};//其他项清空
-      //新增申请单后也需要重新加载所有申请单数据
+      fileList.value = [];//Clear image upload component
+      times.value = [];//Clear start and end times
+      addForm.value = {};//Clear other items
+      //After adding a new application, all application data also need to be reloaded.
       loadApplication();
     }else{
       ElMessage.error(response.data.msg);
     }
   })
 }
-//处理关闭弹窗的方法
+//How to handle closing pop-ups
 const handleClose = ()=>{
-  if(confirm('确认关闭弹窗吗?')){
+  if(confirm('Close the pop-up window?')){
     addApplicationDialogVisible.value = false;
-    fileList.value = [];//图片上传组件清空
-    times.value = [];//起止时间清空
-    addForm.value = {};//其他项清空
+    fileList.value = [];
+    times.value = [];
+    addForm.value = {};
   }
 }
 
-
-/**图片上传相关代码开始**/
+/**Image upload related code begins**/
 const fileList = ref([]);
 const dialogImageUrl = ref('');
 const dialogVisible = ref(false);
-//定义变量用来保存图片上传给哪个后端接口地址
+//Define a variable to store the address of the backend interface to which the image is uploaded.
 const actionUrl = ref(BASE_URL + '/v1/file/upload');
-//移除图片
+//Remove image
 const handleRemove = (uploadFile, uploadFiles) => {
   console.log(uploadFile, uploadFiles);
-  //1.得到要删除的图片路径 uploadFile就是我们要删除的那个图片文件对象
+  //1.The path to the image to be deleted is obtained; `uploadFile` is the image file object we want to delete.
   let imgUrl = uploadFile.response.data;
-  //2.给后端发请求,删除图片
+  //2.Send a request to the backend to delete the image.
   axios.post(BASE_URL+'/v1/file/remove?imgUrl='+imgUrl)
       .then((response)=>{
         if (response.data.code==2000){
-          ElMessage.success('删除成功!');
+          ElMessage.success('Delete succeed!');
         }
       })
 }
-//图片上传后预览
+//Preview after uploading the image
 const handlePictureCardPreview = (uploadFile) => {
   dialogImageUrl.value = uploadFile.url
   dialogVisible.value = true;
   console.log(uploadFile);
   //console.log(fileList.value[0].response.data);
 }
-/**图片上传相关代码结束**/
+/**The code related to image upload ends here**/
 
-//准备数组对象用来保存查出来的申请单数据
+//Prepare an array object to store the retrieved application form data.
 const tableData = ref([]);
-//准备对象用来保存搜索条件
+//The preparation object is used to store the search criteria.
 const searchApplication = ref({
   departureAddr:'',
   destinationAddr:'',
   status:''
 });
-//定义加载申请单的方法
+//Define a method for loading application forms.
 const loadApplication = ()=>{
   let data = qs.stringify(searchApplication.value);
   axios.get(BASE_URL+'/v1/application/select?'+data).then((response)=>{
@@ -302,53 +303,53 @@ const loadApplication = ()=>{
     }
   })
 }
-//定义重置搜索条件的方法
+//Define a method to reset search criteria
 const resetSearch = ()=>{
   searchApplication.value = {};
   loadApplication();
 }
-//一进入页面就加载申请单
+//The application form loads as soon as you enter the page.
 onMounted(()=>{
   loadApplication();
 })
 
-//定义申请单状态显示格式转换函数
+//Define a function to convert the display format of the application form status.
 const appStatusFormatter = (row,column,cellValue,index)=>{
   if(cellValue==10){
-    cellValue = '已发起';
+    cellValue = 'Initiated';
   }else if(cellValue==20){
-    cellValue = '撤销';
+    cellValue = 'Cancel';
   }else if(cellValue==30){
-    cellValue = '审核中';
+    cellValue = 'Under review';
   }else if(cellValue==40){
-    cellValue = '驳回';
+    cellValue = 'Reject';
   }else if(cellValue==50){
-    cellValue = '已通过';
+    cellValue = 'Approved';
   }else if(cellValue==60){
-    cellValue = '分配用车';
+    cellValue = 'Vehicle allocation';
   }else if(cellValue==70){
-    cellValue = '工单结束';
+    cellValue = 'End';
   }
   return cellValue;
 }
 
-//使用数组维护搜索卡片状态选择器中的选项
+//Use an array to maintain the options in the search card state selector.
 const auditOptions = ref([
-  {label:'已发起',value:'10'},
-  {label:'撤销',value:'20'},
-  {label:'审核中',value:'30'},
-  {label:'驳回',value:'40'},
-  {label:'已通过',value:'50'},
-  {label:'分配用车',value:'60'},
-  {label:'工单结束',value:'70'}
+  {label:'Initiated',value:'10'},
+  {label:'Cancel',value:'20'},
+  {label:'Under review',value:'30'},
+  {label:'Reject',value:'40'},
+  {label:'Approved',value:'50'},
+  {label:'Vehicle allocation',value:'60'},
+  {label:'End',value:'70'}
 ])
 
-//撤销用车申请
+//Cancel vehicle use application
 const cancel = (id)=>{
   axios.post(BASE_URL+'/v1/application/cancel/'+id).then((response)=>{
     if (response.data.code==2000){
-      ElMessage.success('撤销成功!');
-      //更新完当前申请单状态后,也需要重新加载申请单数据
+      ElMessage.success('Cancel!');
+      //After updating the current application status, it is also necessary to reload the application data
       loadApplication();
     }else{
       ElMessage.error(response.data.msg);
@@ -356,6 +357,5 @@ const cancel = (id)=>{
   })
 }
 </script>
-
 <style scoped>
 </style>
