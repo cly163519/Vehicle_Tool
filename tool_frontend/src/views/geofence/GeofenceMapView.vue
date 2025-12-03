@@ -1,24 +1,24 @@
-<!--围栏地图页-->
+<!-- Fence Map Page -->
 <template>
 <div style="height:6vh;background-color:#fff;padding:10px 20px;">
-  <span style="line-height:60px;font-size:20px;">新增围栏</span>
+  <span style="line-height:60px;font-size:20px;">Add new fence</span>
     <el-button type="primary" style="float:right;margin-top:13px;"
-                @click="router.push('/geofence')">返回
+                @click="router.push('/geofence')">Return
     </el-button>
 </div>
-  <!--第6步:创建地图容器元素-->
+  <!--  Step 6: Create map container elements -->
   <div id="mapContainer" style="width:100%;height:84vh;"></div>
 
-  <!--9.新增电子围栏弹窗-->
-  <el-dialog title="围栏信息" v-model="dialogVisible" :before-close="closeDialog">
+  <!--9.Add electric fence pop-up window -->
+  <el-dialog title="Fence info" v-model="dialogVisible" :before-close="closeDialog">
     <el-form label-width="80px">
-      <el-form-item label="围栏名称">
-        <el-input v-model="geofence.name" placeholder="请输入围栏名称"></el-input>
+      <el-form-item label="fence name">
+        <el-input v-model="geofence.name" placeholder="Please enter fence name"></el-input>
       </el-form-item>
     </el-form>
     <template #footer>
-      <el-button @click="closeDialog">取消</el-button>
-      <el-button type="primary" @click="saveGeofence">确定</el-button>
+      <el-button @click="closeDialog">Cancel</el-button>
+      <el-button type="primary" @click="saveGeofence">Enter</el-button>
     </template>
   </el-dialog>
 </template>
@@ -32,7 +32,7 @@ import {ElMessage} from "element-plus";
 import qs from "qs";
 import axios from "axios";
 
-//8.定义电子围栏对象,用于给后端新增时发送
+//8.Define an electronic fence object to send when adding new data to the backend.
 const geofence = ref({
   name:'',
   position:{}
@@ -81,14 +81,14 @@ onMounted(()=>{
 const dialogVisible = ref(false);
 const saveGeofence = ()=>{
   if(!geofence.value.name || geofence.value.name.trim().length == 0){
-    ElMessage.error('围栏名称不能为空');
+    ElMessage.error('The fence name cannot be empty.');
     return;
   }
   geofence.value.position = JSON.stringify(geofence.value.position);
   let data = qs.stringify(geofence.value);
   axios.post(BASE_URL+'/v1/geofence/save',data).then((response)=>{
     if(response.data.code === 2000){
-      ElMessage.success('保存成功');
+      ElMessage.success('Succeed');
       dialogVisible.value = false;
       router.push('/geofence');
     }else{
@@ -97,7 +97,7 @@ const saveGeofence = ()=>{
   })
 }
 const closeDialog = ()=>{
-  if(confirm('确认取消新增围栏?')){
+  if(confirm('Confirm cancellation of adding fence?')){
     dialogVisible.value = false;
     map.clearOverlays();
   }
