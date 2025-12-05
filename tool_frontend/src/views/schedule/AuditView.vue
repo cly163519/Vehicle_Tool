@@ -94,27 +94,27 @@ import qs from "qs";
 import axios from "axios";
 import {ElMessage} from "element-plus";
 
-//控制审批弹窗标题
-const dialogTitle = ref("待审批详情");
-//控制审批弹窗是否显示
+// Control Approval Pop-up Title
+const dialogTitle = ref("Details pending approval");
+//Control whether the approval pop-up window is displayed
 const auditDialogVisible = ref(false);
-//控制驳回原因弹窗是否显示
+//Control whether the pop-up window for the reason for rejection is displayed
 const rejectInnerDialogVisible = ref(false);
 
-//定义数组用来保存审批表格数据
+// Define an array to store the approval form data
 const auditArr = ref([]);
-//定义对象用来保存查询条件
+// Define an object to store query conditions
 const search = ref({
-  username:'',//搜索卡片中的用车人姓名
-  auditUserId:'',//预先准备 接下来要查当前登录用户的审批数据
-  auditStatus:''//预先准备 接下来要查当前登录用户对应审批状态下的审批数据
+  username:'', // Search for the user's name in the card
+  auditUserId:'', // Preparation: Next, we need to check the approval data of the currently logged-in user
+  auditStatus:'' // Preparation: Next, we need to check the approval data for the currently logged-in user's approval status
 });
-//获取当前登录的用户数据
+// Get currently logged-in user data
 const user = ref(getUser());
-//设置变量与上方审批状态单选组进行双向绑定
+// Set variables to be two-way bound to the approval status radio button above
 const type = ref(10);
 
-//定义加载审批单数据方法
+// Define a method for loading approval form data
 const loadAudit = ()=>{
   search.value.auditUserId = user.value.id;
   search.value.auditStatus = type.value;
@@ -127,9 +127,9 @@ const loadAudit = ()=>{
     }
   })
 }
-//定义重置搜索条件方法
+// Define a method to reset search criteria
 const resetSearch = ()=>{
-  //清空用户看得见的用车人姓名即可
+  // Simply clear the names of vehicle users that are visible to other users
   search.value.username = '';
   loadAudit();
 }
@@ -138,30 +138,30 @@ onMounted(()=>{
   loadAudit();
 })
 
-//定义对象用来保存审批弹窗数据
+// Define an object to store the approval pop-up data
 const auditDialogData = ref({
-  username:'',//用车人
-  reason:'',//用车事由
-  startTime:'',//使用开始时间
-  endTime:'',//使用结束时间
-  departureAddr:'',//车辆出发地
-  destinationAddr:'',//车辆目的地
-  imgUrl:'',//驾照图片
-  remark:''//备注
+  username:'', //Car user
+  reason:'', //Reason for vehicle use
+  startTime:'', //Start of use time
+  endTime:'', //End of use time
+  departureAddr:'', //Vehicle departure point
+  destinationAddr:'', //Vehicle Destination
+  imgUrl:'', //Driver license image
+  remark:'' //Remark
 })
 
-//点击审批按钮,根据传过来的审批id,请求当前审批单的详细信息
+//Click the "Approve" button, and based on the passed approval ID, request the detailed information of the current approval form
 const auditing = (id)=>{
-  //显示审批+驳回弹窗
+  //Display Approval + Rejection Pop-up
   auditDialogVisible.value = true;
   axios.get(BASE_URL+'/v1/audit/select?id='+id).then((response)=>{
     if(response.data.code==2000){
       auditDialogData.value = response.data.data[0];
-      //根据请求回来的审批单状态设置弹窗标题
+      //Set the pop-up title based on the status of the requested approval form
       if(auditDialogData.value.auditStatus==10){
-        dialogTitle.value = '待审批详情';
+        dialogTitle.value = 'Details pending approval';
       }else{
-        dialogTitle.value = '驳回详情';
+        dialogTitle.value = 'Rejection Details';
       }
     }else{
       ElMessage.error(response.data.msg);
@@ -169,54 +169,54 @@ const auditing = (id)=>{
   })
 }
 
-//审批单通过
+//Approval form passed
 const auditPass = ()=>{
-  //将当前审批单状态改为"已通过"
+  //Change the current approval status to "Approved"
   auditDialogData.value.auditStatus = 30;
   let data = qs.stringify(auditDialogData.value);
   axios.post(BASE_URL+'/v1/audit/update',data).then((response)=>{
     if(response.data.code==2000){
-      ElMessage.success('审批已通过!');
-      auditDialogVisible.value = false;//关闭审批弹窗
-      auditDialogData.value = {};//清空刚刚的审批数据
-      loadAudit();//重新加载审批数据
+      ElMessage.success('Approval has been granted!');
+      auditDialogVisible.value = false;//Close the approval pop-up window
+      auditDialogData.value = {};//Clear the approval data just now
+      loadAudit();//Reload approval data
     }else{
       ElMessage.error(response.data.msg);
     }
   })
 }
-//定义变量保存驳回原因
+//Reason for rejection when saving variable definition
 const rejectReason = ref('');
-//定义函数处理审批驳回操作
+//Define a function to handle approval rejection operations.
 const auditReject = ()=>{
   if(!rejectReason.value || rejectReason.value.trim()==''){
-    ElMessage.error('驳回原因不能为空!');
+    ElMessage.error('The reason for rejection cannot be empty!');
     return;
   }
-  //确认驳回后,关闭两层弹窗
+  //After confirming the rejection, close both pop-up windows
   rejectInnerDialogVisible.value = false;
   auditDialogVisible.value = false;
-  //将当前审批单状态改为"驳回"
+  //Change the current approval status to "Rejected"
   auditDialogData.value.auditStatus = 40;
-  //设置驳回原因
+  //Set rejection reason
   auditDialogData.value.rejectReason = rejectReason.value;
   let data = qs.stringify(auditDialogData.value);
   axios.post(BASE_URL+'/v1/audit/update',data).then((response)=>{
     if(response.data.code==2000){
-      ElMessage.success('驳回完成!');
-      auditDialogData.value = {};//清空刚刚的审批数据
-      rejectReason.value = '';//清空驳回原因
-      loadAudit();//重新加载审批数据
+      ElMessage.success('Rejection complete!');
+      auditDialogData.value = {};//Clear the approval data just now
+      rejectReason.value = '';//Clear the reason for rejection
+      loadAudit();//Reload approval data
     }else{
       ElMessage.error(response.data.msg);
     }
   })
 }
 
-//处理驳回原因弹窗关闭
+//Close the pop-up window for handling rejection reasons
 const rejectConfirm = ()=>{
-  if(confirm('确认关闭本窗口吗?')){
-    //用户确认关闭后,关闭内层驳回原因弹窗,并且清空已输入的驳回原因
+  if(confirm('Are you sure you want to close this window??')){
+    //After the user confirms the closure, the inner rejection reason pop-up window will close, and the entered rejection reason will be cleared
     rejectInnerDialogVisible.value = false;
     rejectReason.value = '';
   }
