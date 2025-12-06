@@ -1,4 +1,4 @@
-<!--车辆分配管理页-->
+<!--Vehicle allocation management page-->
 <template>
   <div style="height: 6vh;background-color:#fff;padding:10px 20px;">
     <span style="line-height:60px;font-size:20px;">车辆分配</span>
