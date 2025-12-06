@@ -1,133 +1,132 @@
-<!--用户管理页-->
+<!--User Management Page-->
 <template>
   <div style="height: 6vh;background-color:#fffbfb;padding: 10px 20px;">
-    <span style="font-size:20px;line-height: 60px;float: left;">用户管理</span>
+    <span style="font-size:20px;line-height: 60px;float: left;">User management</span>
     <el-button @click="dialogVisible=true" type="primary"
-               style="float: right;margin-top:10px;">新建用户
+               style="float: right;margin-top:10px;">Create user
     </el-button>
   </div>
-  <!-- 新建/编辑用户弹窗 -->
-  <!-- :before-close="handleClose"
-  在关闭之前调用handleClose方法,避免点击窗口外部也能关弹窗  -->
+  <!-- Create/edit user pop-up window -->
+  <!-- :before-close="handleClose"Call the handleClose method before closing to prevent the pop-up from closing even when clicking outside the window  -->
   <el-dialog :title="dialogTitle" v-model="dialogVisible"
              :before-close="handleClose"
              style="width: 1000px;padding:40px;">
     <el-form label-position="top" label-width="80px">
       <el-row :gutter="30">
         <el-col :span="12">
-          <el-form-item label="用户名">
-            <el-input placeholder="请输入用户名" v-model="saveUserForm.username"
+          <el-form-item label="username">
+            <el-input placeholder="Please enter username" v-model="saveUserForm.username"
                       :disabled="saveUserForm.id!=null"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="手机号">
-            <el-input placeholder="请输入手机号" v-model="saveUserForm.phone"></el-input>
+          <el-form-item label="Phone number">
+            <el-input placeholder="Please enter phone number" v-model="saveUserForm.phone"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="30">
         <el-col :span="12">
-          <el-form-item label="邮箱">
-            <el-input placeholder="请输入邮箱" v-model="saveUserForm.email"></el-input>
+          <el-form-item label="email">
+            <el-input placeholder="Please enter email address" v-model="saveUserForm.email"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="年龄">
-            <el-input placeholder="请输入年龄" v-model="saveUserForm.age"></el-input>
+          <el-form-item label="Age">
+            <el-input placeholder="Please enter age" v-model="saveUserForm.age"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="30">
         <el-col :span="6">
-          <el-form-item label="职级">
-            <el-select placeholder="请选择" v-model="saveUserForm.level" @change="loadLeader">
-              <!--              <el-option label="职员" value="10"></el-option>-->
-              <!--              <el-option label="经理" value="20"></el-option>-->
-              <!--              <el-option label="总监" value="30"></el-option>-->
-              <!--              <el-option label="总裁" value="40"></el-option>-->
+          <el-form-item label="Rank">
+            <el-select placeholder="Please select" v-model="saveUserForm.level" @change="loadLeader">
+              <!--              <el-option label="Staff" value="10"></el-option>-->
+              <!--              <el-option label="Manager" value="20"></el-option>-->
+              <!--              <el-option label="Director" value="30"></el-option>-->
+              <!--              <el-option label="President" value="40"></el-option>-->
               <el-option v-for="item in levelOptions"
                          :label="item.label" :value="item.value"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="6">
-          <el-form-item label="直属领导">
-            <el-select placeholder="请选择" v-model="saveUserForm.parentId">
+          <el-form-item label="Direct supervisor">
+            <el-select placeholder="Please select" v-model="saveUserForm.parentId">
               <!--              <el-option label="shaoyun" value="1"></el-option>-->
               <!--              <el-option label="mike" value="2"></el-option>-->
               <el-option v-for="item in leaderOptions"
-                         :label="item.username" :value="item.id"></el-option><!-- 这里为什么不用 :label="item.label" :value="item.value"-->
+                         :label="item.username" :value="item.id"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="4">
-          <el-form-item label="性别">
+          <el-form-item label="gender">
             <el-radio-group v-model="saveUserForm.gender">
-              <el-radio label="男" border value="1" style="margin: 0;"></el-radio>
-              <el-radio label="女" border value="0"></el-radio>
+              <el-radio label="Male" border value="1" style="margin: 0;"></el-radio>
+              <el-radio label="Female" border value="0"></el-radio>
             </el-radio-group>
           </el-form-item>
         </el-col>
         <el-col :span="6">
-          <el-form-item label="用户状态">
+          <el-form-item label="User status">
             <el-radio-group v-model="saveUserForm.status">
-              <el-radio label="启用" border value="1" style="margin: 0;"></el-radio>
-              <el-radio label="禁用" border value="0"></el-radio>
+              <el-radio label="Enable" border value="1" style="margin: 0;"></el-radio>
+              <el-radio label="Disable" border value="0"></el-radio>
             </el-radio-group>
           </el-form-item>
         </el-col>
       </el-row>
     </el-form>
     <template #footer>
-      <el-button @click="handleClose">取消</el-button>
-      <el-button type="primary" @click="saveUser">保存</el-button>
+      <el-button @click="handleClose">Cancle</el-button>
+      <el-button type="primary" @click="saveUser">Save</el-button>
     </template>
   </el-dialog>
 
-  <!-- 用户查询卡片 -->
+  <!-- User query card -->
   <el-card style="margin: 20px;height: 70px;">
     <el-form :inline="true" style="float: left;">
-      <el-form-item label="用户搜索" >
-        <el-input placeholder="输入用户名" style="width: 220px;"
+      <el-form-item label="User Search" >
+        <el-input placeholder="Please enter username" style="width: 220px;"
                   v-model="searchUserForm.username" @keydown.enter="loadUser"></el-input>
       </el-form-item>
-      <el-form-item label="用户状态">
-        <el-select placeholder="请选择用户状态" style="width: 290px;"
+      <el-form-item label="User status">
+        <el-select placeholder="Please enter user status" style="width: 290px;"
                    v-model="searchUserForm.status" @change="loadUser">
-          <el-option label="启用" value="1"></el-option>
-          <el-option label="禁用" value="0"></el-option>
+          <el-option label="Enable" value="1"></el-option>
+          <el-option label="Disable" value="0"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button @click="resetSearch">重置</el-button>
-        <el-button type="primary" @click="loadUser">查询</el-button>
+        <el-button @click="resetSearch">Reset</el-button>
+        <el-button type="primary" @click="loadUser">Search</el-button>
       </el-form-item>
     </el-form>
   </el-card>
 
-  <!-- 用户信息表格 -->
+  <!-- User information form -->
   <el-card style="margin: 20px;">
     <el-table :data="userArr">
-      <el-table-column type="index" label="编号" width="80" align="center"></el-table-column>
-      <el-table-column prop="username" label="用户名" align="center"></el-table-column>
-      <el-table-column prop="phone" label="手机号" align="center"></el-table-column>
-      <el-table-column prop="createTime" label="加入时间" align="center"></el-table-column>
-      <el-table-column prop="status" label="用户状态" align="center">
+      <el-table-column type="index" label="Number" width="80" align="center"></el-table-column>
+      <el-table-column prop="username" label="User name" align="center"></el-table-column>
+      <el-table-column prop="phone" label="Phone number" align="center"></el-table-column>
+      <el-table-column prop="createTime" label="Joining time" align="center"></el-table-column>
+      <el-table-column prop="status" label="User status" align="center">
         <template #default="scope">
           <el-switch @change="changeStatus(scope.row.id,scope.row.status)" active-value="1" inactive-value="0" v-model="scope.row.status" :disabled="scope.row.level==40"></el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center">
+      <el-table-column label="Operation" align="center">
         <template #default="scope">
           <el-button type="primary" size="small" link
                      :disabled="scope.row.level==40"
-                     @click="resetPassword(scope.row.id)">密码重置</el-button>
+                     @click="resetPassword(scope.row.id)">Password reset</el-button>
           <el-button type="primary" size="small" link
                      :disabled="scope.row.level==40"
-                     @click="editUser(scope.row.id)">编辑</el-button>
+                     @click="editUser(scope.row.id)">Edit</el-button>
           <el-button type="primary" size="small" link
-                     :disabled="scope.row.level==40" @click="deleteUser(scope.row.id)">删除</el-button>
+                     :disabled="scope.row.level==40" @click="deleteUser(scope.row.id)">Delete</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -140,31 +139,32 @@ import axios from "axios";
 import {ElMessage} from "element-plus";
 import qs from "qs";
 
-//定义变量用来控制新增用户弹窗是否出现
+//Define a variable to control whether the new user pop-up appears
 const dialogVisible = ref(false);
-//定义变量用来保存弹窗标题
-const dialogTitle = ref('新建用户');
+//Define a variable to store the pop-up title.
+const dialogTitle = ref('Create user');
 
-//定义数组保存员工职级选项
+//Define an array to store employee job level options
 const levelOptions = ref([
-  {label:'职员',value:'10'},
-  {label:'经理',value:'20'},
-  {label:'总监',value:'30'},
-  {label:'总裁',value:'40'}
+  {label:'staff',value:'10'},
+  {label:'manager',value:'20'},
+  {label:'director',value:'30'},
+  {label:'president',value:'40'}
 ]);
-//定义数组保存直属领导数据
+//Define an array to store data of direct supervisors
 const leaderOptions = ref([
   {username:'shaoyun',id:'1'},
   {username:'mike',id:'2'}
 ]);
-//定义方法获取直属领导数据
+//Define a method to obtain data from direct supervisors.
 const loadLeader = ()=>{
-  //优化:如果已经勾选了直属领导,想再重新选择职级的话,需要将之前的直属领导数组与已选择的直属领导数据清空
+  //Optimization: If you have already selected a direct supervisor and want to reselect a job level, 
+  //you need to clear the previous direct supervisor array and the selected direct supervisor data.
   leaderOptions.value = [];
   saveUserForm.value.parentId = '';
-  //拿到当前用户选择的职级,直属领导的职级为当前用户的职级+10 注意转为number类型
+  //Retrieve the currently selected job level. The direct supervisor's job level is the current user's job level + 10. Note that this should be converted to a number type.
   let level = parseInt(saveUserForm.value.level)+10;
-  //给后端发请求查数据
+  //Send a request to the backend to retrieve data
   axios.get(BASE_URL+'/v1/user/select?level='+level).then((response)=>{
     if(response.data.code == 2000){
       leaderOptions.value = response.data.data;
@@ -174,8 +174,7 @@ const loadLeader = ()=>{
   })
 }
 
-
-//定义对象收集新增/修改员工弹窗的表单信息
+//Define an object to collect form information from the add/modify employee pop-up window.
 const saveUserForm = ref({
   username:'',
   phone:'',
@@ -187,20 +186,17 @@ const saveUserForm = ref({
   status:''
 });
 
-//定义保存用户的方法
+//Define a method to save users
 const saveUser = ()=>{
-  //如果向后端发请求的参数是一个对象,前端可以使用qs将参数对象转为查询字符串的格式发送
-  //格式:username=tom&phone=18811112222&email=tom@qq.com&age=12&level=20&parentId=1&gender=1&status=1
-  //这样在前端直接处理好,后端不需要考虑前端传过来的是否为对象,也不用加@RequestBody注解了
   let data = qs.stringify(saveUserForm.value);
   console.log(data);
   axios.post(BASE_URL+'/v1/user/save',data)
       .then((response)=>{
         if(response.data.code == 2000){
-          ElMessage.success('保存成功!');
-          dialogVisible.value = false;//关闭弹窗
-          saveUserForm.value = {};//清空已入库的表单数据，否则再次打开弹窗还是之前的值
-          //新增/更新用户后,都需要重新加载用户数据
+          ElMessage.success('Saved successfully!');
+          dialogVisible.value = false;
+          saveUserForm.value = {};//Clear the form data that has already been entered into the database; otherwise, the pop-up window will display the previous values ​​again.
+          //After adding/updating a user, the user data needs to be reloaded.
           loadUser();
         }else{
           ElMessage.error(response.data.msg);
@@ -208,75 +204,75 @@ const saveUser = ()=>{
       })
 }
 
-//处理弹窗关闭的方法
+//Methods for closing pop-ups
 const handleClose = ()=>{
-  if(confirm('确定关闭本窗口吗?')){
-    //用户确认关闭后,关闭弹窗
+  if(confirm('Are you sure you want to close this window?')){
+    //After the user confirms the closure, the pop-up window will close
     dialogVisible.value = false;
-    //清空已输入的表单数据
+    //Clear the entered form data
     saveUserForm.value = {};
   }
 }
-//定义数组用来保存用户列表数据
+//Define an array to store the user list data
 const userArr = ref([
   {username:'ss',phone:'18811112222',createTime:'2022-01-01',status:'1'},
   {username:'yy',phone:'18811113333',createTime:'2022-03-03',status:'0'}
 ]);
-//定义对象用来保存查询条件
+//Define an object to store query conditions
 const searchUserForm = ref({username:'',status:''});
-//定义加载用户数据的方法
+//Define a method for loading user data
 const loadUser = ()=>{
   let data = qs.stringify(searchUserForm.value);
   console.log(data);
-  //如果有查询条件,就根据条件查,没有查询条件,默认查全部员工信息
+  //If there are search criteria, the search will be performed according to those criteria; otherwise, all employee information will be searched by default.
   axios.get(BASE_URL+'/v1/user/select?'+data).then((response)=>{
-    //如果后端返回的状态码是2000,说明成功了
+    //If the backend returns a status code of 2000, it means the process was successful
     if(response.data.code==2000){
-      //把成功请求回来的数据装到与表格绑定的数组中
+      //Store the successfully retrieved data into an array bound to the table
       userArr.value = response.data.data;
     }else{
       ElMessage.error(response.data.msg);
     }
   })
 }
-//页面加载完毕立即调用的方法
+//Method to be called immediately after the page loads
 onMounted(()=>{
-  //加载员工数据
+  // Load employee data
   loadUser();
 })
 
-//重置搜索信息
+// Reset search information
 const resetSearch = ()=>{
-  //清空之前输入的搜索内容
+  // Clear the previously entered search terms
   searchUserForm.value = {};
-  //重新加载所有的用户数据
+  // Reload all user data
   loadUser();
 }
 
-//重置密码 restful风格
+// Reset password (RESTful style)
 const resetPassword = (userId)=>{
   axios.post(BASE_URL+'/v1/user/update/password/'+userId).then((response)=>{
     if(response.data.code == 2000){
-      ElMessage.success('密码重置成功!');
+      ElMessage.success('Password reset successful!');
     }else{
       ElMessage.error(response.data.msg);
     }
   })
 }
 
-//编辑员工
+//Edit staff
 const editUser = (id)=>{
-  //打开弹窗并修改标题
+  //Open the pop-up window and change the title
   dialogVisible.value = true;
-  dialogTitle.value = '编辑员工';
-  //给后端发请求:根据员工id查指定员工的信息
+  dialogTitle.value = 'Edit staff';
+  // Send a request to the backend: Retrieve information for a specified employee based on their employee ID
   axios.get(BASE_URL+'/v1/user/select?id='+id).then((response)=>{
     if(response.data.code == 2000){
-      //注意:后端返回的是List<UserVO> list! 所以这里是data[0]
+      //Note: The backend returns a List<UserVO> list! So here is data[0]
       saveUserForm.value = response.data.data[0];
-      //获取可选直属领导数据
+      // Get optional direct supervisor data
       let level = parseInt(saveUserForm.value.level)+10;
-      //给后端发请求查数据
+      // Send a request to the backend to retrieve data
       axios.get(BASE_URL+'/v1/user/select?level='+level).then((response)=>{
         if(response.data.code == 2000){
           leaderOptions.value = response.data.data;
@@ -290,28 +286,26 @@ const editUser = (id)=>{
   })
 }
 
-//修改员工状态
+//Edit user's status
 const changeStatus = (userId,status)=>{
   axios.post(BASE_URL+'/v1/user/update/status/'+userId+'/'+status)
       .then((response)=>{
         if(response.data.code==2000){
-          ElMessage.success('修改成功!');
+          ElMessage.success('Edit successful!');
         }else{
           ElMessage.error(response.data.msg);
-          //如果数据库没修改成功的话，需要将页面当前用户的状态s
-          //刷新为修改前的状态，也就是重新加载下用户列表即可
           loadUser();
         }
       })
 }
 
-//删除员工
+//Delete staff
 const deleteUser = (userId)=>{
-  if(confirm('您确认要删除该员工吗?')){
+  if(confirm('Are you sure you want to delete this employee?')){
     axios.post(BASE_URL+'/v1/user/delete/'+userId).then((response)=>{
       if(response.data.code==2000){
-        ElMessage.success('删除成功!');
-        //删除成功后,重新加载用户列表
+        ElMessage.success('Delete successful!');
+        //After successful deletion, reload the user list
         loadUser();
       }else{
         ElMessage.error(response.data.msg);
@@ -320,7 +314,5 @@ const deleteUser = (userId)=>{
   }
 }
 </script>
-
 <style scoped>
-
 </style>
